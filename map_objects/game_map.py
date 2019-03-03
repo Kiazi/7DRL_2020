@@ -19,6 +19,7 @@ class GameMap:
         
         self.create_room(room1)
         self.create_room(room2)
+        self.create_h_tunnel(25,40,23)
         
     def create_room(self,room):
         # go through the tiles in the rectangle and make them passable
@@ -26,6 +27,16 @@ class GameMap:
             for y in range(room.y1 + 1, room.y2):
                 self.tiles[x][y].blocked = False
                 self.tiles[x][y].block_sight = False
+                
+    def create_h_tunnel(self, x1, x2, y):
+        for x in range(min(x1, x2), max(x1, x2) +1):
+            self.tiles[x][y].blocked = False
+            self.tiles[x][y].block_sight = False
+
+    def create_v_tunnel(self, y1, y2, x):
+        for x in range(min(y1, y2), max(y1, y2) +1):
+            self.tiles[x][y].blocked = False
+            self.tiles[x][y].block_sight = False
     
     def is_blocked(self, x, y):
         if self.tiles[x][y].blocked:
