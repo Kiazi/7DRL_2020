@@ -30,9 +30,9 @@ def main():
     max_monsters_per_room = 3
     
     colors = {
-        'dark_wall': libtcod.Color(0, 0, 150),
+        'dark_wall': libtcod.Color(105, 105, 105),
         'dark_ground': libtcod.Color(29, 41, 81),
-        'light_wall': libtcod.Color(130,110,50),
+        'light_wall': libtcod.Color(211,211,211),
         'light_ground': libtcod.Color(152, 251, 152)
     }
 
