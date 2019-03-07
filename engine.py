@@ -76,6 +76,7 @@ def main():
         action = handle_keys(key)
 
         move = action.get('move')
+        wait = action.get('wait')
         exit = action.get('exit')
         fullscreen = action.get('fullscreen')
         
@@ -99,6 +100,9 @@ def main():
                     
                 game_state = GameStates.ENEMY_TURN
 
+        if wait == True:
+            game_state = GameStates.ENEMY_TURN
+                
         if exit:
             return True
 

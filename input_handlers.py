@@ -1,5 +1,6 @@
 import libtcodpy as libtcod
 
+from game_states import GameStates
 
 def handle_keys(key):
     key_char = chr(key.c)
@@ -22,7 +23,7 @@ def handle_keys(key):
     elif key_char == 'n' or key.vk == libtcod.KEY_KP3:
         return {'move': (1, 1)}
     elif key.vk == libtcod.KEY_KP5:
-        return {'move': (0, 0)}
+        return {'wait': True}
 
     if key.vk == libtcod.KEY_ENTER and key.lalt:
         # Alt+Enter: toggle full screen
