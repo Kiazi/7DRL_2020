@@ -31,7 +31,7 @@ class Fighter:
                     self.owner.name.capitalize(), target.name, str(damage)), libtcod.white)})
                 results.extend(target.fighter.take_damage(damage))
             else:
-                results.append({'message': Message('{0} stresses out the {1} inflicting {2} stress!'.format(
+                results.append({'message': Message('The {0} stresses out the {1} inflicting {2} stress!'.format(
                     self.owner.name.capitalize(), target.name, str(damage)), libtcod.white)})
                 results.extend(target.fighter.take_damage(damage))
         else:
@@ -39,7 +39,7 @@ class Fighter:
                 results.append({'message': Message('The {0} can`t figure out any problems on the {1}!'.format(
                     self.owner.name.capitalize(), target.name), libtcod.white)})
             else:
-                results.append({'message': Message('{0} attempts to stress out the {1} but {1}`s got this {0} in the bag!'.format(
+                results.append({'message': Message('The {0} attempts to stress out the {1} but {1}`s got this {0} in the bag!'.format(
                     self.owner.name.capitalize(), target.name), libtcod.white)})
                 
         return results
