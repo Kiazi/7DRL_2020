@@ -4,6 +4,7 @@ from components.fighter import Fighter
 from death_functions import kill_monster, kill_player
 from entity import Entity, get_blocking_entities_at_location
 from fov_functions import initialize_fov, recompute_fov
+from game_messages import MessageLog
 from game_states import GameStates
 from input_handlers import handle_keys
 from map_objects.game_map import GameMap
@@ -17,6 +18,10 @@ def main():
     bar_width = 20
     panel_height = 7
     panel_y = screen_height - panel_height
+    
+    message_x = bar_width + 2
+    message_width = screen_width - bar_width - 2
+    message_height = panel_height - 1
     
     # Size of the map
     map_width = 80
@@ -41,8 +46,8 @@ def main():
         'light_ground': libtcod.Color(152, 251, 152)
     }
 
-    fighter_component = Fighter(hp=30, defense=2, power=5)
-    player = Entity(0,0, '@', libtcod.white, 'Player', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component)
+    fighter_component = Fighter(hp=30, defense=2, power=5, name='Student')
+    player = Entity(0,0, '@', libtcod.white, 'Student', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component)
     entities = [player]
 
     libtcod.console_set_custom_font('arial10x10.png', libtcod.FONT_TYPE_GREYSCALE | libtcod.FONT_LAYOUT_TCOD)
@@ -59,6 +64,8 @@ def main():
     
     fov_map = initialize_fov(game_map)
     
+    message_log = MessageLog(message_x, message_width, message_height)
+    
     key = libtcod.Key()
     mouse = libtcod.Mouse()
     
@@ -70,7 +77,8 @@ def main():
         if fov_recompute:
             recompute_fov(fov_map, player.x, player.y, fov_radius, fov_light_walls, fov_algorithm)
 
-        render_all(con, panel, entities, player, game_map, fov_map, fov_recompute, screen_width, screen_height, bar_width, panel_height, panel_y, colors)
+        render_all(con, panel, entities, player, game_map, fov_map, fov_recompute, message_log, screen_width,
+                    screen_height, bar_width, panel_height, panel_y, colors)
 
         fov_recompute = False
         
@@ -119,7 +127,7 @@ def main():
             dead_entity = player_turn_result.get('dead')
             
             if message:
-                print(message)
+                message_log.add_message(message)
             
             if dead_entity:
                 if dead_entity == player:
@@ -127,7 +135,7 @@ def main():
                 else:
                     message = kill_monster(dead_entity)
                 
-                print(message)
+                message_log.add_message(message)
 
         if game_state == GameStates.ENEMY_TURN:
             for entity in entities:
@@ -139,7 +147,7 @@ def main():
                         dead_entity = enemy_turn_result.get('dead')
                         
                         if message:
-                            print(message)
+                            message_log.add_message(message)
                             
                         if dead_entity:
                             if dead_entity == player:
@@ -147,7 +155,7 @@ def main():
                             else:
                                 message = kill_monster(dead_entity)
                             
-                            print(message)
+                            message_log.add_message(message)
                             
                             if game_state == GameStates.PLAYER_DEAD:
                                 break
