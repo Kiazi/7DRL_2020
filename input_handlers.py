@@ -24,6 +24,10 @@ def handle_keys(key):
         return {'move': (1, 1)}
     elif key.vk == libtcod.KEY_KP5:
         return {'wait': True}
+    
+    # Pick up item
+    if key_char == 'g':
+        return {'pickup': True}
 
     if key.vk == libtcod.KEY_ENTER and key.lalt:
         # Alt+Enter: toggle full screen
