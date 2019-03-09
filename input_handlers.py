@@ -7,7 +7,7 @@ def handle_keys(key, game_state):
         return handle_player_turn_keys(key)
     elif game_state == GameStates.PLAYER_DEAD:
         return handle_player_dead_keys(key)
-    elif game_state == GameStates.SHOW_INVENTORY:
+    elif game_state in (GameStates.SHOW_INVENTORY, GameStates.DROP_INVENTORY):
         return handle_inventory_keys(key)
     
     return {}
@@ -54,6 +54,10 @@ def handle_player_turn_keys(key):
     if key_char == 'g':
         return {'pickup': True}
         
+    # Drop item
+    if key_char == 'd':
+        return {'drop_inventory': True}
+        
     # Open/close inventory
     if key_char == 'i':
         return {'show_inventory': True}
@@ -64,7 +68,7 @@ def handle_player_turn_keys(key):
     elif key.vk == libtcod.KEY_ESCAPE:
         # Exit the game
         return {'exit': True}
-
+        
     # No key was pressed
     return {}
 
