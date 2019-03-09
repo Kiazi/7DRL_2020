@@ -1,0 +1,5 @@
+open cmd and cd to this folder
+run:
+pyinstaller engine.py --onefile --windowed
+'dist' folder is the distributable
+need to copy all other files in this folder into the dist folder for the exe to run
