@@ -4,7 +4,7 @@ from enum import Enum, auto
 
 from game_states import GameStates
 
-from menus import inventory_menu, level_up_menu
+from menus import character_screen, inventory_menu, level_up_menu
 
 class RenderOrder(Enum):
     STAIRS = auto()
@@ -78,6 +78,9 @@ def render_all(con, panel, entities, player, game_map, fov_map, fov_recompute, m
     
     if game_state == GameStates.LEVEL_UP:
         level_up_menu(con, 'You gain knowledge of how to best approach school...select a stat to raise:', player, 60, screen_width, screen_height)
+    
+    elif game_state == GameStates.CHARACTER_SCREEN:
+        character_screen(player, 35, 10, screen_width, screen_height)
     
     # Print the game messages, one line at a time
     y = 1

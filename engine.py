@@ -58,8 +58,7 @@ def main():
 
     game_map = GameMap(constants['map_width'], constants['map_height'])
     game_map.make_map(constants['max_rooms'], constants['room_min_size'], constants['room_max_size'],
-                      constants['map_width'], constants['map_height'], player, entities,
-                      constants['max_monsters_per_room'], constants['max_items_per_room'])
+                      constants['map_width'], constants['map_height'], player, entities)
     
     fov_recompute = True
     
@@ -102,6 +101,7 @@ def main():
         inventory_index = action.get('inventory_index')
         take_stairs = action.get('take_stairs')
         level_up = action.get('level_up')
+        show_character_screen = action.get('show_character_screen')
         wait = action.get('wait')
         exit = action.get('exit')
         fullscreen = action.get('fullscreen')
@@ -177,11 +177,15 @@ def main():
 
             game_state = previous_game_state
         
+        if show_character_screen:
+            previous_game_state = game_state
+            game_state = GameStates.CHARACTER_SCREEN
+        
         if wait == True:
             game_state = GameStates.ENEMY_TURN
                 
         if exit:
-            if game_state in (GameStates.SHOW_INVENTORY, GameStates.DROP_INVENTORY):
+            if game_state in (GameStates.SHOW_INVENTORY, GameStates.DROP_INVENTORY, GameStates.CHARACTER_SCREEN):
                 game_state = previous_game_state
             else:
                 return True
