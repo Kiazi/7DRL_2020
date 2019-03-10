@@ -7,7 +7,7 @@ class Level:
 
     @property
     def experience_to_next_level(self):
-        return self.current_level*self.level_up_base + self.current_level * self.level_up_factor
+        return self.current_level*self.level_up_base + (self.current_level-1) * self.level_up_factor
 
     def add_xp(self, xp):
         self.current_xp += xp

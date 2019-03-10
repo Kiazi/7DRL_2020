@@ -213,28 +213,28 @@ class GameMap:
                 elif monster_choice == 'final':
                     if monster_type_choice == 'art':
                     
-                        fighter_component = Fighter(hp=20, defense=0, power=4, name='Art Final Exam', xp=0)
+                        fighter_component = Fighter(hp=20, defense=0, power=4, name='Art Final Exam', xp=4)
                         ai_component = BasicMonster()
                         monster = Entity(x, y, ';', libtcod.white, 'Art Final Exam', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                     
                     elif monster_type_choice == 'math':
                     
-                        fighter_component = Fighter(hp=20, defense=0, power=4, name='Math Final Exam', xp=0)
+                        fighter_component = Fighter(hp=20, defense=0, power=4, name='Math Final Exam', xp=4)
                         ai_component = BasicMonster()
                         monster = Entity(x, y, '<', libtcod.white, 'Math Final Exam', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                     
                     elif monster_type_choice == 'science':
                     
-                        fighter_component = Fighter(hp=20, defense=0, power=4, name='Science Final Exam', xp=0)
+                        fighter_component = Fighter(hp=20, defense=0, power=4, name='Science Final Exam', xp=4)
                         ai_component = BasicMonster()
                         monster = Entity(x, y, '=', libtcod.white, 'Science Final Exam', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                     
                     elif monster_type_choice == 'english':
                     
-                        fighter_component = Fighter(hp=20, defense=0, power=4, name='English Final Exam', xp=0)
+                        fighter_component = Fighter(hp=20, defense=0, power=4, name='English Final Exam', xp=4)
                         ai_component = BasicMonster()
                         monster = Entity(x, y, '[', libtcod.white, 'English Final Exam', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
