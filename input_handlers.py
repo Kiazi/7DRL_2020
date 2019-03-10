@@ -13,6 +13,8 @@ def handle_keys(key, game_state):
         return handle_level_up_menu(key)
     elif game_state == GameStates.CHARACTER_SCREEN:
         return handle_character_screen(key)
+    elif game_state == GameStates.WIN:
+        return handle_player_dead_keys(key)
     
     return {}
 

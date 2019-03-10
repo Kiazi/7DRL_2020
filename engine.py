@@ -1,5 +1,6 @@
 import tcod as libtcod
 
+from components.equipment import Equipment
 from components.fighter import Fighter
 from components.inventory import Inventory
 from components.level import Level
@@ -44,11 +45,13 @@ def main():
     stairsdown_tile = 265
     dagger_tile = 266
     
-    fighter_component = Fighter(hp=30, defense=2, power=5, name='Student')
+    fighter_component = Fighter(hp=100, defense=2, power=5, name='Student')
     inventory_component = Inventory(26)
     level_component = Level()
+    equipment_component = Equipment()
     player = Entity(0,0, player_tile, libtcod.white, 'Student', blocks=True, render_order=RenderOrder.ACTOR,
-                    fighter=fighter_component, inventory=inventory_component, level=level_component)
+                    fighter=fighter_component, inventory=inventory_component, level=level_component,
+                    equipment=equipment_component)
     entities = [player]
     
     libtcod.console_init_root(constants['screen_width'], constants['screen_height'], constants['window_title'], False)
@@ -168,12 +171,12 @@ def main():
         
         if level_up:
             if level_up == 'hp':
-                player.fighter.max_hp += 20
+                player.fighter.base_max_hp += 20
                 player.fighter.hp += 20
             elif level_up == 'str':
-                player.fighter.power += 1
+                player.fighter.base_power += 1
             elif level_up == 'def':
-                player.fighter.defense += 1
+                player.fighter.base_defense += 1
 
             game_state = previous_game_state
         
@@ -199,6 +202,7 @@ def main():
             item_added = player_turn_result.get('item_added')
             item_consumed = player_turn_result.get('consumed')
             item_dropped = player_turn_result.get('item_dropped')
+            equip = player_turn_result.get('equip')
             
             if message:
                 message_log.add_message(message)
@@ -224,6 +228,21 @@ def main():
                 
                 game_state = GameStates.ENEMY_TURN
             
+            if equip:
+                equip_results = player.equipment.toggle_equip(equip)
+                
+                for equip_result in equip_results:
+                    equipped = equip_result.get('equipped')
+                    dequipped = equip_result.get('dequipped')
+                    
+                    if equipped:
+                        message_log.add_message(Message('You equipped the {0}'.format(equipped.name)))
+                        
+                    if dequipped:
+                        message_log.add_message(Message('You dequipped the {0}'.format(dequipped.name)))
+                        
+                game_state = GameStates.ENEMY_TURN
+            
             xp = player_turn_result.get('xp')
             
             if xp:
@@ -231,11 +250,16 @@ def main():
                 message_log.add_message(Message('You passed the Final Exam and gained {0} credits!'.format(xp)))
                 
                 if leveled_up:
-                    message_log.add_message(Message(
-                        'You made it through another year of school! You move on to school year {0}'.format(
-                            player.level.current_level) + '!', libtcod.yellow))
-                    previous_game_state = game_state
-                    game_state = GameStates.LEVEL_UP
+                    if player.level.current_level == 5:
+                        previous_game_state = game_state
+                        game_state = GameStates.WIN
+                        message_log.add_message(Message('You have completed 180 credits at the College of Doom! You graduated!', libtcod.yellow))
+                    else:
+                        message_log.add_message(Message(
+                            'You made it through another year of school! You move on to school year {0}'.format(
+                                player.level.current_level) + '!', libtcod.yellow))
+                        previous_game_state = game_state
+                        game_state = GameStates.LEVEL_UP
 
         if game_state == GameStates.ENEMY_TURN:
             for entity in entities:

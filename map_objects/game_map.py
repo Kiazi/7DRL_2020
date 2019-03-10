@@ -140,21 +140,21 @@ class GameMap:
                 monster_choice = random_choice_from_dict(monster_chances)
                 
                 if monster_choice == 'quiz':
-                    fighter_component = Fighter(hp=10, defense=0, power=3, name='Quiz', xp=10)
+                    fighter_component = Fighter(hp=20, defense=0, power=4, name='Quiz', xp=10)
                     ai_component = BasicMonster()
                     
                     monster = Entity(x, y, '#', libtcod.desaturated_green, 'Quiz', blocks = True,
                         render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                         
                 elif monster_choice == 'exam':
-                    fighter_component = Fighter(hp=16, defense=1, power=4, name='Exam', xp=0)
+                    fighter_component = Fighter(hp=35, defense=1, power=4, name='Exam', xp=0)
                     ai_component = BasicMonster()
                     
                     monster = Entity(x, y, '$', libtcod.darker_green, 'Exam', blocks = True,
                         render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                 
                 elif monster_choice == 'final_exam':
-                    fighter_component = Fighter(hp=21, defense=2, power=5, name='Final Exam', xp=4)
+                    fighter_component = Fighter(hp=50, defense=2, power=8, name='Final Exam', xp=4)
                     ai_component = BasicMonster()
                     
                     monster = Entity(x, y, '^', libtcod.darker_green, 'Final Exam', blocks = True,
@@ -169,7 +169,7 @@ class GameMap:
                 item_choice = random_choice_from_dict(item_chances)
                 
                 if item_choice == 'healing_potion':
-                    item_component=Item(use_function=heal, amount =4)
+                    item_component=Item(use_function=heal, amount = 40)
                     item = Entity(x, y, '!', libtcod.light_violet, 'Neurotransmitter', render_order=RenderOrder.ITEM,
                                     item=item_component)
                 
