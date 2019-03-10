@@ -11,6 +11,17 @@ from input_handlers import handle_keys
 from map_objects.game_map import GameMap
 from render_functions import clear_all, render_all, RenderOrder
 
+def load_customfont():
+    # the index of the first custom tile in the file
+    a = 256
+    
+    # the 'y' is the row index, here we load the sixth row in the font file. increase the '6' to load any new rows from the file
+    for y in range(5, 6):
+        libtcod.console_map_ascii_codes_to_font(a, 32, 0, y)
+        a += 32
+    #libtcod.console_map_ascii_code_to_font(34,0,3)
+
+
 
 def main():
     screen_width = 80
@@ -47,15 +58,29 @@ def main():
         'light_wall': libtcod.Color(211,211,211),
         'light_ground': libtcod.Color(152, 251, 152)
     }
-
+    
+    libtcod.console_set_custom_font('tiledfont.png', libtcod.FONT_TYPE_GREYSCALE | libtcod.FONT_LAYOUT_TCOD, 32, 10)
+    
+    load_customfont()
+    
+    # defining tiles (rather than numbers)
+    wall_tile = 256
+    floor_tile = 257
+    player_tile = 64 # using @ symbol
+    quiz_tile = 259
+    exam_tile = 260
+    healingpotion_tile = 261
+    sword_tile = 263
+    shield_tile = 264
+    stairsdown_tile = 265
+    dagger_tile = 266
+    
     fighter_component = Fighter(hp=30, defense=2, power=5, name='Student')
     inventory_component = Inventory(26)
-    player = Entity(0,0, '@', libtcod.white, 'Student', blocks=True, render_order=RenderOrder.ACTOR,
+    player = Entity(0,0, player_tile, libtcod.white, 'Student', blocks=True, render_order=RenderOrder.ACTOR,
                     fighter=fighter_component, inventory=inventory_component)
     entities = [player]
-
-    libtcod.console_set_custom_font('arial10x10.png', libtcod.FONT_TYPE_GREYSCALE | libtcod.FONT_LAYOUT_TCOD)
-
+    
     libtcod.console_init_root(screen_width, screen_height, 'CollegeRL', False)
 
     con = libtcod.console.Console(screen_width, screen_height)
