@@ -8,6 +8,7 @@ from fov_functions import initialize_fov, recompute_fov
 from game_messages import Message, MessageLog
 from game_states import GameStates
 from input_handlers import handle_keys
+from loader_functions.initialize_new_game import get_constants
 from map_objects.game_map import GameMap
 from render_functions import clear_all, render_all, RenderOrder
 
@@ -24,40 +25,7 @@ def load_customfont():
 
 
 def main():
-    screen_width = 80
-    screen_height = 50
-    
-    bar_width = 20
-    panel_height = 7
-    panel_y = screen_height - panel_height
-    
-    message_x = bar_width + 2
-    message_width = screen_width - bar_width - 2
-    message_height = panel_height - 1
-    
-    # Size of the map
-    map_width = 80
-    map_height = 43
-
-    # Some variables for the rooms in the map
-    room_max_size = 10
-    room_min_size = 6
-    max_rooms = 30
-    
-    # variables for field of view
-    fov_algorithm = 0
-    fov_light_walls = True
-    fov_radius = 10
-    
-    max_monsters_per_room = 3
-    max_items_per_room = 2
-    
-    colors = {
-        'dark_wall': libtcod.Color(105, 105, 105),
-        'dark_ground': libtcod.Color(29, 41, 81),
-        'light_wall': libtcod.Color(211,211,211),
-        'light_ground': libtcod.Color(152, 251, 152)
-    }
+    constants = get_constants()
     
     libtcod.console_set_custom_font('tiledfont.png', libtcod.FONT_TYPE_GREYSCALE | libtcod.FONT_LAYOUT_TCOD, 32, 10)
     
@@ -81,19 +49,21 @@ def main():
                     fighter=fighter_component, inventory=inventory_component)
     entities = [player]
     
-    libtcod.console_init_root(screen_width, screen_height, 'CollegeRL', False)
+    libtcod.console_init_root(constants['screen_width'], constants['screen_height'], constants['window_title'], False)
 
-    con = libtcod.console.Console(screen_width, screen_height)
-    panel = libtcod.console.Console(screen_width, panel_height)
+    con = libtcod.console.Console(constants['screen_width'], constants['screen_height'])
+    panel = libtcod.console.Console(constants['screen_width'], constants['panel_height'])
 
-    game_map = GameMap(map_width, map_height)
-    game_map.make_map(max_rooms, room_min_size, room_max_size, map_width, map_height, player, entities, max_monsters_per_room, max_items_per_room)
+    game_map = GameMap(constants['map_width'], constants['map_height'])
+    game_map.make_map(constants['max_rooms'], constants['room_min_size'], constants['room_max_size'],
+                      constants['map_width'], constants['map_height'], player, entities,
+                      constants['max_monsters_per_room'], constants['max_items_per_room'])
     
     fov_recompute = True
     
     fov_map = initialize_fov(game_map)
     
-    message_log = MessageLog(message_x, message_width, message_height)
+    message_log = MessageLog(constants['message_x'], constants['message_width'], constants['message_height'])
     
     key = libtcod.Key()
     mouse = libtcod.Mouse()
@@ -105,10 +75,12 @@ def main():
         libtcod.sys_check_for_event(libtcod.EVENT_KEY_PRESS | libtcod.EVENT_MOUSE, key, mouse)
         
         if fov_recompute:
-            recompute_fov(fov_map, player.x, player.y, fov_radius, fov_light_walls, fov_algorithm)
+            recompute_fov(fov_map, player.x, player.y, constants['fov_radius'], constants['fov_light_walls'],
+                          constants['fov_algorithm'])
 
-        render_all(con, panel, entities, player, game_map, fov_map, fov_recompute, message_log, screen_width,
-                    screen_height, bar_width, panel_height, panel_y, mouse, colors, game_state)
+        render_all(con, panel, entities, player, game_map, fov_map, fov_recompute, message_log,
+                   constants['screen_width'], constants['screen_height'], constants['bar_width'],
+                   constants['panel_height'], constants['panel_y'], mouse, constants['colors'], game_state)
 
         fov_recompute = False
         
@@ -123,6 +95,7 @@ def main():
         show_inventory = action.get('show_inventory')
         drop_inventory = action.get('drop_inventory')
         inventory_index = action.get('inventory_index')
+        take_stairs = action.get('take_stairs')
         wait = action.get('wait')
         exit = action.get('exit')
         fullscreen = action.get('fullscreen')
@@ -174,6 +147,18 @@ def main():
                 player_turn_results.extend(player.inventory.use(item))
             elif game_state == GameStates.DROP_INVENTORY:
                 player_turn_results.extend(player.inventory.drop_item(item))
+        
+        if take_stairs and game_state == GameStates.PLAYERS_TURN:
+            for entity in entities:
+                if entity.stairs and entity.x == player.x and entity.y == player.y:
+                    entities = game_map.next_floor(player, message_log, constants)
+                    fov_map = initialize_fov(game_map)
+                    fov_recompute = True
+                    libtcod.console_clear(con)
+
+                    break
+            else:
+                message_log.add_message(Message('You search around, but Summer break is nowhere to be seen.', libtcod.yellow))
         
         if wait == True:
             game_state = GameStates.ENEMY_TURN

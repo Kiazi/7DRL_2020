@@ -49,6 +49,8 @@ def handle_player_turn_keys(key):
         return {'move': (1, 1)}
     elif key.vk == libtcod.KEY_KP5:
         return {'wait': True}
+    elif key.vk == libtcod.KEY_ENTER:
+        return {'take_stairs': True}
     
     # Pick up item
     if key_char == 'g':
