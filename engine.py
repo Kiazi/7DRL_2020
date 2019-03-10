@@ -73,6 +73,9 @@ def main():
     game_state = GameStates.PLAYERS_TURN
     previous_game_state = game_state
 
+    # Welcome the player
+    message_log.add_message(Message('Welcome, Student, to the College of Doom! Aquire 180 credits to graduate...or die trying!', libtcod.white))
+    
     while not libtcod.console_is_window_closed():
         libtcod.sys_check_for_event(libtcod.EVENT_KEY_PRESS | libtcod.EVENT_MOUSE, key, mouse)
         
@@ -157,7 +160,7 @@ def main():
                     entities = game_map.next_floor(player, message_log, constants)
                     fov_map = initialize_fov(game_map)
                     fov_recompute = True
-                    libtcod.console_clear(con)
+                    libtcod.con.clear()
 
                     break
             else:
