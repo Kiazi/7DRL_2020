@@ -2,6 +2,7 @@ import tcod as libtcod
 
 from components.fighter import Fighter
 from components.inventory import Inventory
+from components.level import Level
 from death_functions import kill_monster, kill_player
 from entity import Entity, get_blocking_entities_at_location
 from fov_functions import initialize_fov, recompute_fov
@@ -45,8 +46,9 @@ def main():
     
     fighter_component = Fighter(hp=30, defense=2, power=5, name='Student')
     inventory_component = Inventory(26)
+    level_component = Level()
     player = Entity(0,0, player_tile, libtcod.white, 'Student', blocks=True, render_order=RenderOrder.ACTOR,
-                    fighter=fighter_component, inventory=inventory_component)
+                    fighter=fighter_component, inventory=inventory_component, level=level_component)
     entities = [player]
     
     libtcod.console_init_root(constants['screen_width'], constants['screen_height'], constants['window_title'], False)
@@ -96,6 +98,7 @@ def main():
         drop_inventory = action.get('drop_inventory')
         inventory_index = action.get('inventory_index')
         take_stairs = action.get('take_stairs')
+        level_up = action.get('level_up')
         wait = action.get('wait')
         exit = action.get('exit')
         fullscreen = action.get('fullscreen')
@@ -160,6 +163,17 @@ def main():
             else:
                 message_log.add_message(Message('You search around, but Summer break is nowhere to be seen.', libtcod.yellow))
         
+        if level_up:
+            if level_up == 'hp':
+                player.fighter.max_hp += 20
+                player.fighter.hp += 20
+            elif level_up == 'str':
+                player.fighter.power += 1
+            elif level_up == 'def':
+                player.fighter.defense += 1
+
+            game_state = previous_game_state
+        
         if wait == True:
             game_state = GameStates.ENEMY_TURN
                 
@@ -202,6 +216,19 @@ def main():
                 entities.append(item_dropped)
                 
                 game_state = GameStates.ENEMY_TURN
+            
+            xp = player_turn_result.get('xp')
+            
+            if xp:
+                leveled_up = player.level.add_xp(xp)
+                message_log.add_message(Message('You passed the Final Exam and gained {0} credits!'.format(xp)))
+                
+                if leveled_up:
+                    message_log.add_message(Message(
+                        'You made it through another year of school! You move on to school year {0}'.format(
+                            player.level.current_level) + '!', libtcod.yellow))
+                    previous_game_state = game_state
+                    game_state = GameStates.LEVEL_UP
 
         if game_state == GameStates.ENEMY_TURN:
             for entity in entities:

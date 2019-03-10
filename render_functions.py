@@ -4,7 +4,7 @@ from enum import Enum, auto
 
 from game_states import GameStates
 
-from menus import inventory_menu
+from menus import inventory_menu, level_up_menu
 
 class RenderOrder(Enum):
     STAIRS = auto()
@@ -76,6 +76,9 @@ def render_all(con, panel, entities, player, game_map, fov_map, fov_recompute, m
     libtcod.console_set_default_background(panel, libtcod.black)
     libtcod.console_clear(panel)
     
+    if game_state == GameStates.LEVEL_UP:
+        level_up_menu(con, 'You gain knowledge of how to best approach school...select a stat to raise:', player, 60, screen_width, screen_height)
+    
     # Print the game messages, one line at a time
     y = 1
     for message in message_log.messages:
@@ -85,6 +88,8 @@ def render_all(con, panel, entities, player, game_map, fov_map, fov_recompute, m
     
     render_bar(panel, 1, 1, bar_width, 'Stress', player.fighter.max_hp - player.fighter.hp, player.fighter.max_hp,
                 libtcod.light_red, libtcod.darker_red)
+    libtcod.console_print_ex(panel, 1, 3, libtcod.BKGND_NONE, libtcod.LEFT,
+                             'Term: {0}'.format(game_map.dungeon_level))
                 
     libtcod.console_set_default_foreground(panel, libtcod.light_gray)
     libtcod.console_print_ex(panel, 1, 0, libtcod.BKGND_NONE, libtcod.LEFT,

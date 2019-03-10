@@ -121,24 +121,24 @@ class GameMap:
             
             if not any([entity for entity in entities if entity.x == x and entity.y == y]):
                 if randint(0, 100) < 80:
-                    fighter_component = Fighter(hp=10, defense=0, power=3, name='Quiz')
+                    fighter_component = Fighter(hp=10, defense=0, power=3, name='Quiz', xp=10)
                     ai_component = BasicMonster()
                     
-                    monster = Entity(x, y, 'q', libtcod.desaturated_green, 'Quiz', blocks = True,
+                    monster = Entity(x, y, '#', libtcod.desaturated_green, 'Quiz', blocks = True,
                         render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                         
                 elif randint(0, 100) < 80:
-                    fighter_component = Fighter(hp=16, defense=1, power=4, name='Exam')
+                    fighter_component = Fighter(hp=16, defense=1, power=4, name='Exam', xp=0)
                     ai_component = BasicMonster()
                     
-                    monster = Entity(x, y, 'E', libtcod.darker_green, 'Exam', blocks = True,
+                    monster = Entity(x, y, '$', libtcod.darker_green, 'Exam', blocks = True,
                         render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                 
                 else:
-                    fighter_component = Fighter(hp=21, defense=2, power=5, name='Final Exam')
+                    fighter_component = Fighter(hp=21, defense=2, power=5, name='Final Exam', xp=4)
                     ai_component = BasicMonster()
                     
-                    monster = Entity(x, y, 'F', libtcod.darker_green, 'Final Exam', blocks = True,
+                    monster = Entity(x, y, '^', libtcod.darker_green, 'Final Exam', blocks = True,
                         render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                 entities.append(monster)
                 

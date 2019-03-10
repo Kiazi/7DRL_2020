@@ -37,3 +37,10 @@ def inventory_menu(con, header, inventory, inventory_width, screen_width, screen
         options = [item.name for item in inventory.items]
 
     menu(con, header, options, inventory_width, screen_width, screen_height)
+    
+def level_up_menu(con, header, player, menu_width, screen_width, screen_height):
+    options = ['Stress Threshold (+20 max Stress, from {0})'.format(player.fighter.max_hp),
+               'Intelligence (+1 problem solving, from {0})'.format(player.fighter.power),
+               'Confidence (+1 stress reduction, from {0})'.format(player.fighter.defense)]
+
+    menu(con, header, options, menu_width, screen_width, screen_height)

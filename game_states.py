@@ -7,3 +7,5 @@ class GameStates(Enum):
     PLAYER_DEAD = auto()
     SHOW_INVENTORY = auto()
     DROP_INVENTORY = auto()
+    LEVEL_UP = auto()
+    CHARACTER_SCREEN = auto()
