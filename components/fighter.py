@@ -3,13 +3,26 @@ import tcod as libtcod
 from game_messages import Message
 
 class Fighter:
-    def __init__(self, hp, defense, power, name, xp=0):
+    def __init__(self, hp, defense, power, name, xp=0, subject=None,
+                    art_power=0, art_defense=0,
+                    math_power=0, math_defense=0,
+                    science_power=0, science_defense=0,
+                    english_power=0, english_defense=0):
         self.base_max_hp = hp
         self.hp = hp
         self.base_defense = defense
         self.base_power = power
         self.name = name
         self.xp = xp
+        self.subject = subject
+        self.art_power = art_power
+        self.art_defense = art_defense
+        self.math_power = math_power
+        self.math_defense = math_defense
+        self.science_power = science_power
+        self.science_defense = science_defense
+        self.english_power = english_power
+        self.english_defense = english_power
         
     @property
     def max_hp(self):
@@ -57,8 +70,37 @@ class Fighter:
     def attack(self, target):
         results = []
         
-        damage = self.power - target.fighter.defense
+        if self.subject == 'art':
+            damage = self.power + self.art_power - target.fighter.defense - target.fighter.art_defense
         
+        # player attack
+        elif target.fighter.subject == 'art':
+            damage = self.power + self.art_power - target.fighter.defense - target.fighter.art_defense
+            
+        elif self.subject == 'math':
+            damage = self.power + self.math_power - target.fighter.defense - target.fighter.math_defense
+        
+        # player attack
+        elif target.fighter.subject == 'math':
+            damage = self.power + self.math_power - target.fighter.defense - target.fighter.math_defense
+            
+        elif self.subject == 'science':
+            damage = self.power + self.science_power - target.fighter.defense - target.fighter.science_defense
+        
+        # player attack
+        elif target.fighter.subject == 'science':
+            damage = self.power + self.science_power - target.fighter.defense - target.fighter.science_defense
+            
+        elif self.subject == 'english':
+            damage = self.power + self.english_power - target.fighter.defense - target.fighter.english_defense
+        
+        # player attack
+        elif target.fighter.subject == 'english':
+            damage = self.power + self.english_power - target.fighter.defense - target.fighter.english_defense
+            
+        else:
+            damage = 1
+            
         if damage > 0:
             if self.name == 'Student':
                 results.append({'message': Message('The {0} finishes {2} problems on the {1}.'.format(
@@ -70,10 +112,10 @@ class Fighter:
                 results.extend(target.fighter.take_damage(damage))
         else:
             if self.name == 'Student':
-                results.append({'message': Message('The {0} can`t figure out any problems on the {1}!'.format(
+                results.append({'message': Message('The {0} can\'t figure out any problems on the {1}!'.format(
                     self.owner.name.capitalize(), target.name), libtcod.white)})
             else:
-                results.append({'message': Message('The {0} attempts to stress out the {1} but {1}`s got this {0} in the bag!'.format(
+                results.append({'message': Message('The {0} attempts to stress out the {1} but the {1}\'s got this {0} in the bag!'.format(
                     self.owner.name.capitalize(), target.name), libtcod.white)})
                 
         return results

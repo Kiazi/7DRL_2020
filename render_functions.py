@@ -43,18 +43,19 @@ def render_all(con, panel, entities, player, game_map, fov_map, fov_recompute, m
             for x in range(game_map.width):
                 visible = libtcod.map_is_in_fov(fov_map, x, y)
                 wall = game_map.tiles[x][y].block_sight
-
+                wall_tile = 256
+                floor_tile = 257
                 if visible:
                     if wall:
-                        libtcod.console_set_char_background(con, x, y, colors.get('light_wall'), libtcod.BKGND_SET)
+                        libtcod.console_put_char_ex(con, x, y, wall_tile, libtcod.white, libtcod.black)
                     else:
-                        libtcod.console_set_char_background(con, x, y, colors.get('light_ground'), libtcod.BKGND_SET)
+                        libtcod.console_put_char_ex(con, x, y, floor_tile, libtcod.white, libtcod.black)
                     game_map.tiles[x][y].explored = True
                 elif game_map.tiles[x][y].explored:
                     if wall:
-                        libtcod.console_set_char_background(con, x, y, colors.get('dark_wall'), libtcod.BKGND_SET)
+                        libtcod.console_put_char_ex(con, x, y, wall_tile, libtcod.grey, libtcod.black)
                     else:
-                        libtcod.console_set_char_background(con, x, y, colors.get('dark_ground'), libtcod.BKGND_SET)
+                        libtcod.console_put_char_ex(con, x, y, floor_tile, libtcod.grey, libtcod.black)
 
     entities_in_render_order = sorted(entities, key=lambda x: x.render_order.value)
     

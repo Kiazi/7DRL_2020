@@ -33,12 +33,16 @@ def main():
     
     libtcod.console_set_custom_font('tiledfont.png', libtcod.FONT_TYPE_GREYSCALE | libtcod.FONT_LAYOUT_TCOD, 32, 10)
     
+    libtcod.console_init_root(constants['screen_width'], constants['screen_height'], constants['window_title'], False)
+
+    # load the custom font rows
     load_customfont()
     
+    # assign the custom font rows numbers to text (for easier calling when defining entities with custom tiles)
     # defining tiles (rather than numbers)
     wall_tile = 256
     floor_tile = 257
-    player_tile = 64 # using @ symbol
+    player_tile = 258
     quiz_tile = 259
     exam_tile = 260
     healingpotion_tile = 261
@@ -57,12 +61,10 @@ def main():
     entities = [player]
     
     equippable_component = Equippable(EquipmentSlots.MAIN_HAND, power_bonus=1)
-    dagger = Entity(0,0, '-', libtcod.sky, 'Dagger', equippable=equippable_component)
+    dagger = Entity(0,0, dagger_tile, libtcod.sky, 'Pencil', equippable=equippable_component)
     player.inventory.add_item(dagger)
     player.equipment.toggle_equip(dagger)
     
-    libtcod.console_init_root(constants['screen_width'], constants['screen_height'], constants['window_title'], False)
-
     con = libtcod.console.Console(constants['screen_width'], constants['screen_height'])
     panel = libtcod.console.Console(constants['screen_width'], constants['panel_height'])
 
