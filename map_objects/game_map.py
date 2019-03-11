@@ -136,8 +136,8 @@ class GameMap:
         
         item_chances = {
             'healing_potion': 50,
-            'art_sword': from_dungeon_level([[50, 1]], self.dungeon_level),
-            'art_shield': from_dungeon_level([[50, 1]], self.dungeon_level),
+            'art_sword': from_dungeon_level([[5, 1]], self.dungeon_level),
+            'art_shield': from_dungeon_level([[5, 1]], self.dungeon_level),
             'math_sword': from_dungeon_level([[5, 1]], self.dungeon_level),
             'math_shield': from_dungeon_level([[5, 1]], self.dungeon_level),
             'science_sword': from_dungeon_level([[5, 1]], self.dungeon_level),
