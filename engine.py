@@ -61,7 +61,7 @@ def main():
     entities = [player]
     
     equippable_component = Equippable(EquipmentSlots.MAIN_HAND, power_bonus=1)
-    dagger = Entity(0,0, dagger_tile, libtcod.sky, 'Pencil', equippable=equippable_component)
+    dagger = Entity(0,0, dagger_tile, libtcod.white, 'Pencil', equippable=equippable_component)
     player.inventory.add_item(dagger)
     player.equipment.toggle_equip(dagger)
     

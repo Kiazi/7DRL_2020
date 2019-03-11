@@ -6,7 +6,7 @@ from render_functions import RenderOrder
 
 
 def kill_player(player):
-    player.char = '%'
+    player.char = 287
     player.color = libtcod.dark_red
 
     return Message('Too big of a courseload...you died of stress fatigue!', libtcod.red), GameStates.PLAYER_DEAD
@@ -15,8 +15,8 @@ def kill_player(player):
 def kill_monster(monster):
     death_message = Message('The {0} is finished!'.format(monster.name.capitalize()), libtcod.orange)
 
-    monster.char = '%'
-    monster.color = libtcod.dark_red
+    monster.char = 287
+    monster.color = libtcod.white
     monster.blocks = False
     monster.fighter = None
     monster.ai = None
