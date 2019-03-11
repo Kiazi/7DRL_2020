@@ -136,8 +136,8 @@ class GameMap:
         
         item_chances = {
             'healing_potion': 50,
-            'art_sword': from_dungeon_level([[5, 1]], self.dungeon_level),
-            'art_shield': from_dungeon_level([[5, 1]], self.dungeon_level),
+            'art_sword': from_dungeon_level([[50, 1]], self.dungeon_level),
+            'art_shield': from_dungeon_level([[50, 1]], self.dungeon_level),
             'math_sword': from_dungeon_level([[5, 1]], self.dungeon_level),
             'math_shield': from_dungeon_level([[5, 1]], self.dungeon_level),
             'science_sword': from_dungeon_level([[5, 1]], self.dungeon_level),
@@ -258,28 +258,28 @@ class GameMap:
                     item = Entity(x, y, 262, libtcod.white, 'Relaxing Tea', render_order=RenderOrder.ITEM,
                                     item=item_component)
                 elif item_choice == 'art_sword':
-                    equippable_component = Equippable(EquipmentSlots.MAIN_HAND, power_bonus=5)
+                    equippable_component = Equippable(EquipmentSlots.MAIN_HAND, art_power_bonus=5)
                     item = Entity(x, y, 267, libtcod.white, 'Paintbrush', equippable=equippable_component)
                 elif item_choice == 'art_shield':
-                    equippable_component = Equippable(EquipmentSlots.OFF_HAND, defense_bonus=4)
+                    equippable_component = Equippable(EquipmentSlots.OFF_HAND, art_defense_bonus=4)
                     item = Entity(x, y, 268, libtcod.white, 'Pallete Clipboard', equippable=equippable_component)
                 elif item_choice == 'math_sword':
-                    equippable_component = Equippable(EquipmentSlots.MAIN_HAND, power_bonus=5)
+                    equippable_component = Equippable(EquipmentSlots.MAIN_HAND, math_power_bonus=5)
                     item = Entity(x, y, 269, libtcod.white, 'Ruler', equippable=equippable_component)
                 elif item_choice == 'math_shield':
-                    equippable_component = Equippable(EquipmentSlots.OFF_HAND, defense_bonus=4)
+                    equippable_component = Equippable(EquipmentSlots.OFF_HAND, math_defense_bonus=4)
                     item = Entity(x, y, 270, libtcod.white, 'Measuring Clipboard', equippable=equippable_component)
                 elif item_choice == 'science_sword':
-                    equippable_component = Equippable(EquipmentSlots.MAIN_HAND, power_bonus=5)
+                    equippable_component = Equippable(EquipmentSlots.MAIN_HAND, science_power_bonus=5)
                     item = Entity(x, y, 271, libtcod.white, 'Calculator', equippable=equippable_component)
                 elif item_choice == 'science_shield':
-                    equippable_component = Equippable(EquipmentSlots.OFF_HAND, defense_bonus=4)
+                    equippable_component = Equippable(EquipmentSlots.OFF_HAND, science_defense_bonus=4)
                     item = Entity(x, y, 272, libtcod.white, 'Vial Clipboard', equippable=equippable_component)
                 elif item_choice == 'english_sword':
-                    equippable_component = Equippable(EquipmentSlots.MAIN_HAND, power_bonus=5)
+                    equippable_component = Equippable(EquipmentSlots.MAIN_HAND, english_power_bonus=5)
                     item = Entity(x, y, 273, libtcod.white, 'Dictionary', equippable=equippable_component)
                 elif item_choice == 'english_shield':
-                    equippable_component = Equippable(EquipmentSlots.OFF_HAND, defense_bonus=4)
+                    equippable_component = Equippable(EquipmentSlots.OFF_HAND, english_defense_bonus=4)
                     item = Entity(x, y, 274, libtcod.white, 'Report Clipboard', equippable=equippable_component)
                 
                 entities.append(item)

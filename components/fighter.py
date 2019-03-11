@@ -49,7 +49,7 @@ class Fighter:
         else:
             bonus = 0
 
-        return self.base_power + bonus
+        return bonus
         
     @property
     def math_power(self):
@@ -58,7 +58,7 @@ class Fighter:
         else:
             bonus = 0
 
-        return self.base_power + bonus
+        return bonus
         
     @property
     def science_power(self):
@@ -67,7 +67,7 @@ class Fighter:
         else:
             bonus = 0
 
-        return self.base_power + bonus
+        return bonus
         
     @property
     def english_power(self):
@@ -76,7 +76,7 @@ class Fighter:
         else:
             bonus = 0
 
-        return self.base_power + bonus
+        return bonus
 
     @property
     def defense(self):
@@ -94,7 +94,7 @@ class Fighter:
         else:
             bonus = 0
 
-        return self.base_defense + bonus
+        return bonus
     
     @property
     def math_defense(self):
@@ -103,7 +103,7 @@ class Fighter:
         else:
             bonus = 0
 
-        return self.base_defense + bonus
+        return bonus
         
     @property
     def science_defense(self):
@@ -112,7 +112,7 @@ class Fighter:
         else:
             bonus = 0
 
-        return self.base_defense + bonus
+        return bonus
         
     @property
     def english_defense(self):
@@ -121,7 +121,7 @@ class Fighter:
         else:
             bonus = 0
 
-        return self.base_defense + bonus
+        return bonus
         
     def take_damage(self, amount):
         results = []
@@ -159,7 +159,14 @@ class Fighter:
             damage = self.power + self.english_power - target.fighter.defense - target.fighter.english_defense
         
         elif target.fighter.name == 'Student':
-            damage = self.power - target.fighter.defense
+            if self.subject == 'art':
+                damage = self.power - target.fighter.defense - target.fighter.art_defense
+            if self.subject == 'math':
+                damage = self.power - target.fighter.defense - target.fighter.math_defense
+            if self.subject == 'science':
+                damage = self.power - target.fighter.defense - target.fighter.science_defense
+            if self.subject == 'english':
+                damage = self.power - target.fighter.defense - target.fighter.english_defense
         
         else:
             damage = 0
@@ -176,9 +183,9 @@ class Fighter:
         else:
             if self.name == 'Student':
                 results.append({'message': Message('The {0} can\'t figure out any problems on the {1}!'.format(
-                    self.owner.name.capitalize(), target.name), libtcod.white)})
+                    self.owner.name.capitalize(), target.name), libtcod.light_red)})
             else:
                 results.append({'message': Message('The {0} attempts to stress out the {1} but the {1}\'s got this {0} in the bag!'.format(
-                    self.owner.name.capitalize(), target.name), libtcod.white)})
+                    self.owner.name.capitalize(), target.name), libtcod.light_green)})
                 
         return results

@@ -173,7 +173,7 @@ def main():
                     entities = game_map.next_floor(player, message_log, constants)
                     fov_map = initialize_fov(game_map)
                     fov_recompute = True
-                    libtcod.con.clear()
+                    con.clear()
 
                     break
             else:

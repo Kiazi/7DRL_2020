@@ -115,14 +115,14 @@ class Equipment:
         return bonus
         
     @property
-    def english_defense_bonus(self):
+    def science_defense_bonus(self):
         bonus = 0
 
         if self.main_hand and self.main_hand.equippable:
-            bonus += self.main_hand.equippable.english_defense_bonus
+            bonus += self.main_hand.equippable.science_defense_bonus
 
         if self.off_hand and self.off_hand.equippable:
-            bonus += self.off_hand.equippable.english_defense_bonus
+            bonus += self.off_hand.equippable.science_defense_bonus
 
         return bonus
         
