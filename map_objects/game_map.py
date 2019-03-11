@@ -155,28 +155,28 @@ class GameMap:
                 if monster_choice == 'quiz':
                     if monster_type_choice == 'art':
                     
-                        fighter_component = Fighter(hp=20, defense=0, power=4, name='Art Quiz', xp=0, subject='art', art_power=10, art_defense=10)
+                        fighter_component = Fighter(hp=20, defense=0, power=4, name='Art Quiz', xp=0, subject='art')
                         ai_component = BasicMonster()
                         monster = Entity(x, y, '"', libtcod.white, 'Art Quiz', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                     
                     elif monster_type_choice == 'math':
                     
-                        fighter_component = Fighter(hp=20, defense=0, power=4, name='Math Quiz', xp=0, subject='math', math_power=10, math_defense=10)
+                        fighter_component = Fighter(hp=20, defense=0, power=4, name='Math Quiz', xp=0, subject='math')
                         ai_component = BasicMonster()
                         monster = Entity(x, y, '#', libtcod.white, 'Math Quiz', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                     
                     elif monster_type_choice == 'science':
                     
-                        fighter_component = Fighter(hp=20, defense=0, power=4, name='Science Quiz', xp=0, subject='science', science_power=10, science_defense=10)
+                        fighter_component = Fighter(hp=20, defense=0, power=4, name='Science Quiz', xp=0, subject='science')
                         ai_component = BasicMonster()
                         monster = Entity(x, y, '$', libtcod.white, 'Science Quiz', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                     
                     elif monster_type_choice == 'english':
                     
-                        fighter_component = Fighter(hp=20, defense=0, power=4, name='English Quiz', xp=0, subject='english', english_power=10, english_defense=10)
+                        fighter_component = Fighter(hp=20, defense=0, power=4, name='English Quiz', xp=0, subject='english')
                         ai_component = BasicMonster()
                         monster = Entity(x, y, '*', libtcod.white, 'English Quiz', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)

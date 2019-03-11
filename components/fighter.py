@@ -70,36 +70,27 @@ class Fighter:
     def attack(self, target):
         results = []
         
-        if self.subject == 'art':
-            damage = self.power + self.art_power - target.fighter.defense - target.fighter.art_defense
-        
         # player attack
-        elif target.fighter.subject == 'art':
+        if target.fighter.subject == 'art':
             damage = self.power + self.art_power - target.fighter.defense - target.fighter.art_defense
-            
-        elif self.subject == 'math':
-            damage = self.power + self.math_power - target.fighter.defense - target.fighter.math_defense
         
         # player attack
         elif target.fighter.subject == 'math':
             damage = self.power + self.math_power - target.fighter.defense - target.fighter.math_defense
-            
-        elif self.subject == 'science':
-            damage = self.power + self.science_power - target.fighter.defense - target.fighter.science_defense
         
         # player attack
         elif target.fighter.subject == 'science':
             damage = self.power + self.science_power - target.fighter.defense - target.fighter.science_defense
-            
-        elif self.subject == 'english':
-            damage = self.power + self.english_power - target.fighter.defense - target.fighter.english_defense
         
         # player attack
         elif target.fighter.subject == 'english':
             damage = self.power + self.english_power - target.fighter.defense - target.fighter.english_defense
-            
+        
+        elif target.fighter.name == 'Student':
+            damage = self.power - target.fighter.defense
+        
         else:
-            damage = 1
+            damage = 0
             
         if damage > 0:
             if self.name == 'Student':
