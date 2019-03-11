@@ -15,14 +15,14 @@ class Fighter:
         self.name = name
         self.xp = xp
         self.subject = subject
-        self.art_power = art_power
-        self.art_defense = art_defense
-        self.math_power = math_power
-        self.math_defense = math_defense
-        self.science_power = science_power
-        self.science_defense = science_defense
-        self.english_power = english_power
-        self.english_defense = english_power
+        #self.art_power = art_power
+        #self.art_defense = art_defense
+        #self.math_power = math_power
+        #self.math_defense = math_defense
+        #self.science_power = science_power
+        #self.science_defense = science_defense
+        #self.english_power = english_power
+        #self.english_defense = english_power
         
     @property
     def max_hp(self):
@@ -41,11 +41,83 @@ class Fighter:
             bonus = 0
 
         return self.base_power + bonus
+        
+    @property
+    def art_power(self):
+        if self.owner and self.owner.equipment:
+            bonus = self.owner.equipment.art_power_bonus
+        else:
+            bonus = 0
+
+        return self.base_power + bonus
+        
+    @property
+    def math_power(self):
+        if self.owner and self.owner.equipment:
+            bonus = self.owner.equipment.math_power_bonus
+        else:
+            bonus = 0
+
+        return self.base_power + bonus
+        
+    @property
+    def science_power(self):
+        if self.owner and self.owner.equipment:
+            bonus = self.owner.equipment.science_power_bonus
+        else:
+            bonus = 0
+
+        return self.base_power + bonus
+        
+    @property
+    def english_power(self):
+        if self.owner and self.owner.equipment:
+            bonus = self.owner.equipment.english_power_bonus
+        else:
+            bonus = 0
+
+        return self.base_power + bonus
 
     @property
     def defense(self):
         if self.owner and self.owner.equipment:
             bonus = self.owner.equipment.defense_bonus
+        else:
+            bonus = 0
+
+        return self.base_defense + bonus
+        
+    @property
+    def art_defense(self):
+        if self.owner and self.owner.equipment:
+            bonus = self.owner.equipment.art_defense_bonus
+        else:
+            bonus = 0
+
+        return self.base_defense + bonus
+    
+    @property
+    def math_defense(self):
+        if self.owner and self.owner.equipment:
+            bonus = self.owner.equipment.math_defense_bonus
+        else:
+            bonus = 0
+
+        return self.base_defense + bonus
+        
+    @property
+    def science_defense(self):
+        if self.owner and self.owner.equipment:
+            bonus = self.owner.equipment.science_defense_bonus
+        else:
+            bonus = 0
+
+        return self.base_defense + bonus
+        
+    @property
+    def english_defense(self):
+        if self.owner and self.owner.equipment:
+            bonus = self.owner.equipment.english_defense_bonus
         else:
             bonus = 0
 
