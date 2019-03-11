@@ -131,6 +131,7 @@ def main():
                 if target:
                     attack_results = player.fighter.attack(target)
                     player_turn_results.extend(attack_results)
+                    fov_recompute = True
                 else:
                     player.move(dx, dy)
                     
@@ -195,6 +196,7 @@ def main():
         
         if wait == True:
             game_state = GameStates.ENEMY_TURN
+            fov_recompute = True
                 
         if exit:
             if game_state in (GameStates.SHOW_INVENTORY, GameStates.DROP_INVENTORY, GameStates.CHARACTER_SCREEN):
@@ -298,6 +300,8 @@ def main():
                         
             else:
                 game_state = GameStates.PLAYERS_TURN
+            
+            fov_recompute = True
 
 if __name__ == '__main__':
      main()

@@ -17,7 +17,7 @@ from render_functions import RenderOrder
 from game_messages import Message
 
 class GameMap:
-    def __init__(self, width, height, dungeon_level=8):
+    def __init__(self, width, height, dungeon_level=1):
         self.width = width
         self.height = height
         self.tiles = self.initialize_tiles()
@@ -135,15 +135,15 @@ class GameMap:
         }
         
         item_chances = {
-            'healing_potion': 35,
-            'art_sword': from_dungeon_level([[5, 4]], self.dungeon_level),
-            'art_shield': from_dungeon_level([[15, 8]], self.dungeon_level),
-            'math_sword': from_dungeon_level([[5, 4]], self.dungeon_level),
-            'math_shield': from_dungeon_level([[15, 8]], self.dungeon_level),
-            'science_sword': from_dungeon_level([[5, 4]], self.dungeon_level),
-            'science_shield': from_dungeon_level([[15, 8]], self.dungeon_level),
-            'english_sword': from_dungeon_level([[5, 4]], self.dungeon_level),
-            'english_shield': from_dungeon_level([[15, 8]], self.dungeon_level),
+            'healing_potion': 50,
+            'art_sword': from_dungeon_level([[5, 1]], self.dungeon_level),
+            'art_shield': from_dungeon_level([[5, 1]], self.dungeon_level),
+            'math_sword': from_dungeon_level([[5, 1]], self.dungeon_level),
+            'math_shield': from_dungeon_level([[5, 1]], self.dungeon_level),
+            'science_sword': from_dungeon_level([[5, 1]], self.dungeon_level),
+            'science_shield': from_dungeon_level([[5, 1]], self.dungeon_level),
+            'english_sword': from_dungeon_level([[5, 1]], self.dungeon_level),
+            'english_shield': from_dungeon_level([[5, 1]], self.dungeon_level),
             #'lightning_scroll': from_dungeon_level([[25, 4]], self.dungeon_level),
             #'fireball_scroll': from_dungeon_level([[25, 6]], self.dungeon_level),
             #'confusion_scroll': from_dungeon_level([[10, 2]], self.dungeon_level)
