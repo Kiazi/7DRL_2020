@@ -1,0 +1,9 @@
+Run the game: run 'CollegeRL.exe'
+
+Controls:
+hjklyubn or arrow keys or numpad - movement
+g - get item
+i - inventory
+c - character screen
+esc - go to previous menu or exit game
+enter (not numpad enter) - move down stairs
