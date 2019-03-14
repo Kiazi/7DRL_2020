@@ -15,4 +15,4 @@ class Equippable:
         self.science_power_bonus = science_power_bonus
         self.science_defense_bonus = science_defense_bonus
         self.english_power_bonus = english_power_bonus
-        self.english_defense_bonus = english_power_bonus
+        self.english_defense_bonus = english_defense_bonus
