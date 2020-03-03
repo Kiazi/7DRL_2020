@@ -21,7 +21,7 @@ def get_names_under_mouse(mouse, entities, fov_map):
 
     return names.capitalize()
     
-def render_bar(panel, x, y, total_width, name, value, maximum, bar_color, back_color):
+def render_bar(panel, x, y, total_width, name, value, maximum, bar_color, back_color, text_color):
     bar_width = int(float(value) / maximum * total_width)
     
     libtcod.console_set_default_background(panel, back_color)
@@ -31,7 +31,7 @@ def render_bar(panel, x, y, total_width, name, value, maximum, bar_color, back_c
     if bar_width > 0:
         libtcod.console_rect(panel, x, y, bar_width, 1, False, libtcod.BKGND_SCREEN)
         
-    libtcod.console_set_default_foreground(panel, libtcod.white)
+    libtcod.console_set_default_foreground(panel, text_color)
     libtcod.console_print_ex(panel, int(x + total_width / 2), y, libtcod.BKGND_NONE, libtcod.CENTER,
                 '{0}: {1}/{2}'.format(name, value, maximum))
     
@@ -78,7 +78,7 @@ def render_all(con, panel, entities, player, game_map, fov_map, fov_recompute, m
     libtcod.console_clear(panel)
     
     if game_state == GameStates.LEVEL_UP:
-        level_up_menu(con, 'You gain knowledge of how to best approach school...select a stat to raise:', player, 60, screen_width, screen_height)
+        level_up_menu(con, 'You gain knowledge of how to best use the elements...select a stat to raise:', player, 60, screen_width, screen_height)
     
     elif game_state == GameStates.CHARACTER_SCREEN:
         character_screen(player, 35, 10, screen_width, screen_height)
@@ -90,8 +90,8 @@ def render_all(con, panel, entities, player, game_map, fov_map, fov_recompute, m
         libtcod.console_print_ex(panel, message_log.x, y, libtcod.BKGND_NONE, libtcod.LEFT, message.text)
         y += 1
     
-    render_bar(panel, 1, 1, bar_width, 'Stress', player.fighter.max_hp - player.fighter.hp, player.fighter.max_hp,
-                libtcod.light_red, libtcod.darker_red)
+    render_bar(panel, 1, 1, bar_width, 'Health', player.fighter.hp, player.fighter.max_hp,
+                libtcod.orange, libtcod.darker_orange, libtcod.black)
     libtcod.console_print_ex(panel, 1, 3, libtcod.BKGND_NONE, libtcod.LEFT,
                              'Term: {0}'.format(game_map.dungeon_level))
                 

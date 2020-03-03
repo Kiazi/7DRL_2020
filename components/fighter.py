@@ -158,7 +158,7 @@ class Fighter:
         elif target.fighter.subject == 'english':
             damage = self.power + self.english_power - target.fighter.defense - target.fighter.english_defense
         
-        elif target.fighter.name == 'Student':
+        elif target.fighter.name == 'Guardian':
             if self.subject == 'art':
                 damage = self.power - target.fighter.defense - target.fighter.art_defense
             if self.subject == 'math':
@@ -172,20 +172,20 @@ class Fighter:
             damage = 0
             
         if damage > 0:
-            if self.name == 'Student':
-                results.append({'message': Message('The {0} finishes {2} problems on the {1}.'.format(
-                    self.owner.name.capitalize(), target.name, str(damage)), libtcod.white)})
+            if self.name == 'Guardian':
+                results.append({'message': Message('The {0} deals {2} damage to the {1}.'.format(
+                    self.owner.name.capitalize(), target.name, str(damage)), libtcod.light_green)})
                 results.extend(target.fighter.take_damage(damage))
             else:
-                results.append({'message': Message('The {0} stresses out the {1} inflicting {2} stress!'.format(
-                    self.owner.name.capitalize(), target.name, str(damage)), libtcod.white)})
+                results.append({'message': Message('The {0} damages the {1} inflicting {2} damage!'.format(
+                    self.owner.name.capitalize(), target.name, str(damage)), libtcod.red)})
                 results.extend(target.fighter.take_damage(damage))
         else:
-            if self.name == 'Student':
-                results.append({'message': Message('The {0} can\'t figure out any problems on the {1}!'.format(
-                    self.owner.name.capitalize(), target.name), libtcod.light_red)})
+            if self.name == 'Guardian':
+                results.append({'message': Message('The {0} can\'t damage the {1}!'.format(
+                    self.owner.name.capitalize(), target.name, str(damage)), libtcod.light_red)})
             else:
-                results.append({'message': Message('The {0} attempts to stress out the {1} but the {1}\'s got this {0} in the bag!'.format(
-                    self.owner.name.capitalize(), target.name), libtcod.light_green)})
+                results.append({'message': Message('The {0} heals the {1} for {2} health!'.format(
+                    self.owner.name.capitalize(), target.name, str(damage)), libtcod.green)})
                 
         return results

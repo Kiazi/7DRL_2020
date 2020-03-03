@@ -4,8 +4,8 @@ import tcod as libtcod
 def get_constants():
     window_title = 'CollegeRL'
 
-    screen_width = 80
-    screen_height = 50
+    screen_width = 50
+    screen_height = 30
 
     bar_width = 20
     panel_height = 7
@@ -15,8 +15,8 @@ def get_constants():
     message_width = screen_width - bar_width - 2
     message_height = panel_height - 1
 
-    map_width = 80
-    map_height = 43
+    map_width = 50
+    map_height = 23
 
     room_max_size = 10
     room_min_size = 6

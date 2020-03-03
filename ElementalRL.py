@@ -51,11 +51,11 @@ def main():
     stairsdown_tile = 265
     dagger_tile = 266
     
-    fighter_component = Fighter(hp=100, defense=1, power=3, name='Student')
+    fighter_component = Fighter(hp=100, defense=1, power=3, name='Guardian')
     inventory_component = Inventory(26)
     level_component = Level()
     equipment_component = Equipment()
-    player = Entity(0,0, player_tile, libtcod.white, 'Student', blocks=True, render_order=RenderOrder.ACTOR,
+    player = Entity(0,0, player_tile, libtcod.white, 'Guardian', blocks=True, render_order=RenderOrder.ACTOR,
                     fighter=fighter_component, inventory=inventory_component, level=level_component,
                     equipment=equipment_component)
     entities = [player]
@@ -85,7 +85,7 @@ def main():
     previous_game_state = game_state
 
     # Welcome the player
-    message_log.add_message(Message('Welcome, Student, to the College of Doom! Aquire 180 credits to graduate...or die trying!', libtcod.white))
+    message_log.add_message(Message('Welcome, Guardian, to the College of Doom! Aquire 180 credits to graduate...or die trying!', libtcod.white))
     
     while not libtcod.console_is_window_closed():
         libtcod.sys_check_for_event(libtcod.EVENT_KEY_PRESS | libtcod.EVENT_MOUSE, key, mouse)

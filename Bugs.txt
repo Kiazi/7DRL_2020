@@ -1,13 +1,1 @@
-Dictionary grants attack and defense (should only grant attack) vs English * 
-	FIX: equippable.py line 18
-	Currently reads:
-		self.english_defense_bonus = english_power_bonus
-	Should read:
-		self.english_defense_bonus = english_defense_bonus
-	This should also fix Report Clipboards not granting English defense
-	
-	Also note:
-	Though commented out, fighter.py line 25 should read:
-		#self.english_defense = english_defense
-
-Corpses render as black tiles when not in LOS (should render as floor tile).
+Anything on floor renders as black tiles when not in LOS (should render as floor tile).
