@@ -2,7 +2,7 @@ import tcod as libtcod
 
 
 def get_constants():
-    window_title = 'CollegeRL'
+    window_title = 'ElementalRL'
 
     screen_width = 50
     screen_height = 30
