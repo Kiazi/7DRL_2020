@@ -92,7 +92,7 @@ def render_all(con, panel, entities, player, game_map, fov_map, fov_recompute, m
     libtcod.console_clear(panel)
     
     if game_state == GameStates.LEVEL_UP:
-        level_up_menu(con, 'You gain knowledge of how to best use the elements...select a stat to raise:', player, 60, screen_width, screen_height)
+        level_up_menu(con, 'You gain knowledge of how to best use the elements...select a stat to raise:', player, screen_width-2, screen_width, screen_height)
     
     elif game_state == GameStates.CHARACTER_SCREEN:
         character_screen(player, 35, 10, screen_width, screen_height)

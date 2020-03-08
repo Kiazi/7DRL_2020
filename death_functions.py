@@ -13,7 +13,7 @@ def kill_player(player):
 
 
 def kill_monster(monster):
-    death_message = Message('The {0} is absorbed!'.format(monster.name.capitalize()), libtcod.orange)
+    death_message = Message('The {0} is absorbed!'.format(monster.name), libtcod.orange)
 
     monster.char = 287
     monster.color = libtcod.white
@@ -24,4 +24,3 @@ def kill_monster(monster):
     monster.render_order = RenderOrder.CORPSE
     
     return death_message
-    return absorb(monster.fighter.element,monster.fighter.xp)

@@ -20,8 +20,8 @@ def load_customfont():
     # the index of the first custom tile in the file
     a = 256
     
-    # the 'y' is the row index, here we load the sixth row in the font file. increase the '6' to load any new rows from the file
-    for y in range(5, 6):
+    # the 'y' is the row index, here we load the sixth and seventh row in the font file. increase the '7' to load any new rows from the file
+    for y in range(5, 7):
         libtcod.console_map_ascii_codes_to_font(a, 32, 0, y)
         a += 32
     #libtcod.console_map_ascii_code_to_font(34,0,3)
@@ -51,8 +51,8 @@ def main():
     stairsdown_tile = 265
     dagger_tile = 266
     
-    fighter_component = Fighter(hp=100, defense=1, power=3, name='Guardian')
-    inventory_component = Inventory(26)
+    fighter_component = Fighter(hp=30, defense=0, power=3, name='Guardian')
+    inventory_component = Inventory(8)
     level_component = Level()
     equipment_component = Equipment()
     player = Entity(0,0, player_tile, libtcod.white, 'Guardian', blocks=True, render_order=RenderOrder.ACTOR,
@@ -61,9 +61,14 @@ def main():
     entities = [player]
     
     equippable_component = Equippable(EquipmentSlots.MAIN_HAND, power_bonus=1)
-    dagger = Entity(0,0, dagger_tile, libtcod.white, 'Pencil', equippable=equippable_component)
+    dagger = Entity(0,0, dagger_tile, libtcod.white, 'Elemental Absorber + 1', equippable=equippable_component)
     player.inventory.add_item(dagger)
     player.equipment.toggle_equip(dagger)
+    
+    equippable_component = Equippable(EquipmentSlots.OFF_HAND, max_hp_bonus=0, defense_bonus=1)
+    shield = Entity(0,0, shield_tile, libtcod.white, 'Elemental Deflector + 1', equippable=equippable_component)
+    player.inventory.add_item(shield)
+    player.equipment.toggle_equip(shield)
     
     con = libtcod.console.Console(constants['screen_width'], constants['screen_height'])
     panel = libtcod.console.Console(constants['screen_width'], constants['panel_height'])
@@ -85,7 +90,7 @@ def main():
     previous_game_state = game_state
 
     # Welcome the player
-    message_log.add_message(Message('Welcome, Guardian, to the College of Doom! Aquire 180 credits to graduate...or die trying!', libtcod.white))
+    message_log.add_message(Message('Welcome, Guardian, to the Elemental Chasms! Aquire 180 exp to save the elements...or die trying!', libtcod.white))
     
     while not libtcod.console_is_window_closed():
         libtcod.sys_check_for_event(libtcod.EVENT_KEY_PRESS | libtcod.EVENT_MOUSE, key, mouse)
@@ -177,16 +182,16 @@ def main():
 
                     break
             else:
-                message_log.add_message(Message('You search around, but Summer break is nowhere to be seen.', libtcod.yellow))
+                message_log.add_message(Message('You search around, but the stairs are nowhere to be seen.', libtcod.yellow))
         
         if level_up:
             if level_up == 'hp':
                 player.fighter.base_max_hp += 20
                 player.fighter.hp += 20
             elif level_up == 'str':
-                player.fighter.base_power += 1
+                player.fighter.base_power += 5
             elif level_up == 'def':
-                player.fighter.base_defense += 1
+                player.fighter.base_defense += 2
 
             game_state = previous_game_state
         
@@ -231,24 +236,38 @@ def main():
                     elif dead_entity.fighter.element == 'fire':
                         player.fighter.fire_element += dead_entity.fighter.xp
                         message = kill_monster(dead_entity)
+                        if player.fighter.fire_element > player.fighter.max_fire_element:
+                            player.fighter.fire_element = player.fighter.max_fire_element
                     elif dead_entity.fighter.element == 'air':
                         player.fighter.air_element += dead_entity.fighter.xp
                         message = kill_monster(dead_entity)
+                        if player.fighter.air_element > player.fighter.max_air_element:
+                            player.fighter.air_element = player.fighter.max_air_element
                     elif dead_entity.fighter.element == 'ice':
                         player.fighter.ice_element += dead_entity.fighter.xp
                         message = kill_monster(dead_entity)
+                        if player.fighter.ice_element > player.fighter.max_ice_element:
+                            player.fighter.ice_element = player.fighter.max_ice_element
                     elif dead_entity.fighter.element == 'lightning':
                         player.fighter.lightning_element += dead_entity.fighter.xp
                         message = kill_monster(dead_entity)
+                        if player.fighter.lightning_element > player.fighter.max_lightning_element:
+                            player.fighter.lightning_element = player.fighter.max_lightning_element
                     elif dead_entity.fighter.element == 'earth':
                         player.fighter.earth_element += dead_entity.fighter.xp
                         message = kill_monster(dead_entity)
+                        if player.fighter.earth_element > player.fighter.max_earth_element:
+                            player.fighter.earth_element = player.fighter.max_earth_element
                     elif dead_entity.fighter.element == 'psychic':
                         player.fighter.psychic_element += dead_entity.fighter.xp
                         message = kill_monster(dead_entity)
+                        if player.fighter.psychic_element > player.fighter.max_psychic_element:
+                            player.fighter.psychic_element = player.fighter.max_psychic_element
                     elif dead_entity.fighter.element == 'water':
                         player.fighter.water_element += dead_entity.fighter.xp
                         message = kill_monster(dead_entity)
+                        if player.fighter.water_element > player.fighter.max_water_element:
+                            player.fighter.water_element = player.fighter.max_water_element
                 
                 message_log.add_message(message)
             
@@ -284,20 +303,31 @@ def main():
             
             if xp:
                 leveled_up = player.level.add_xp(xp)
-                message_log.add_message(Message('You gained {0} exp!'.format(xp))) 
-                # player.fighter.blank_element +=1
+                message_log.add_message(Message('You gained {0} exp!'.format(xp)))
+                if (player.fighter.blank_element == player.fighter.max_blank_element and
+                    player.fighter.fire_element == player.fighter.max_fire_element and
+                    player.fighter.air_element == player.fighter.max_air_element and
+                    player.fighter.ice_element == player.fighter.max_ice_element and
+                    player.fighter.lightning_element == player.fighter.max_lightning_element and
+                    player.fighter.earth_element == player.fighter.max_earth_element and
+                    player.fighter.psychic_element == player.fighter.max_psychic_element and
+                    player.fighter.water_element == player.fighter.max_water_element):
+                    previous_game_state = game_state
+                    game_state = GameStates.WIN
+                    message_log.add_message(Message('You have collected all of the elements and are now a true Elemental Guardian! You won!', libtcod.yellow))
                 
                 if leveled_up:
-                    if player.level.current_level == 5:
-                        previous_game_state = game_state
-                        game_state = GameStates.WIN
-                        message_log.add_message(Message('You have completed 180 credits at the College of Doom! You graduated!', libtcod.yellow))
-                    else:
-                        message_log.add_message(Message(
-                            'Level up! You are now level {0}'.format(
-                                player.level.current_level) + '!', libtcod.yellow))
-                        previous_game_state = game_state
-                        game_state = GameStates.LEVEL_UP
+                    
+                    # if player.level.current_level == 5:
+                        # previous_game_state = game_state
+                        # game_state = GameStates.WIN
+                        # message_log.add_message(Message('You have collected 180 exp! You won!', libtcod.yellow))
+                    # else:
+                    message_log.add_message(Message(
+                        'Level up! You are now level {0}'.format(
+                            player.level.current_level) + '!', libtcod.yellow))
+                    previous_game_state = game_state
+                    game_state = GameStates.LEVEL_UP
                         
         if game_state == GameStates.ENEMY_TURN:
             for entity in entities:

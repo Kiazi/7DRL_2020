@@ -10,9 +10,9 @@ def heal(*args, **kwargs):
     results = []
 
     if entity.fighter.hp == entity.fighter.max_hp:
-        results.append({'consumed': False, 'message': Message('You are already at minimum stress levels', libtcod.yellow)})
+        results.append({'consumed': False, 'message': Message('You are already at maximum health.', libtcod.yellow)})
     else:
         entity.fighter.heal(amount)
-        results.append({'consumed': True, 'message': Message('Your stress starts to fade away!', libtcod.green)})
+        results.append({'consumed': True, 'message': Message('Your wounds begin to close!', libtcod.green)})
 
     return results

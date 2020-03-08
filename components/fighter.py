@@ -322,9 +322,6 @@ class Fighter:
         if self.hp > self.max_hp:
             self.hp = self.max_hp
     
-    def absorb(self, element, amount):
-        self.base_power +=500
-    
     def attack(self, target):
         results = []
         
@@ -460,8 +457,8 @@ class Fighter:
             lightning_damage+
             earth_damage+
             psychic_damage+
-            water_damage
-            ,0))
+            water_damage-
+            target.fighter.defense,0))
             
             #determine the damage type. This can then be printed with str(damage_type)
             if base_damage > max(blank_damage,fire_damage,air_damage,ice_damage,lightning_damage,earth_damage,psychic_damage,water_damage):
@@ -496,28 +493,50 @@ class Fighter:
         
         else:
             damage = 0
-            
+        
+        damage_color =  libtcod.white
+        if damage_type == 'physical':
+            damage_color = libtcod.light_gray
+        elif damage_type == 'true':
+            damage_color = libtcod.white
+        elif damage_type == 'fire':
+            damage_color = libtcod.orange
+        elif damage_type == 'air':
+            damage_color = libtcod.Color(210,233,175)
+        elif damage_type == 'ice':
+            damage_color = libtcod.Color(173,216,230)
+        elif damage_type == 'lightning':
+            damage_color = libtcod.light_yellow
+        elif damage_type == 'earth':
+            damage_color = libtcod.light_orange
+        elif damage_type == 'psychic':
+            damage_color = libtcod.light_purple
+        elif damage_type == 'water':
+            damage_color = libtcod.light_blue
+        
         if damage > 0:
             if self.name == 'Guardian':
                 #Add in str(damage_type) as a fourth variable {3} to use. i.e. The Guardian deals 4 fire damage to the ice elemental.
                 results.append({'message': Message('The {0} deals {2} {3} damage to the {1}.'.format(
-                    self.owner.name.capitalize(), target.name, str(damage), damage_type), libtcod.light_green)})
+                    self.owner.name, target.name, str(damage), damage_type), damage_color)})
                 results.extend(target.fighter.take_damage(damage))
             else:
                 results.append({'message': Message('The {0} deals {2} {3} damage to the {1}.'.format(
-                    self.owner.name.capitalize(), target.name, str(damage), damage_type), libtcod.red)})
+                    self.owner.name, target.name, str(damage), damage_type), damage_color)})
                 results.extend(target.fighter.take_damage(damage))
         elif damage < 0:
             if self.name == 'Guardian':
                 results.append({'message': Message('The {0} heals the {1} for {2} health!'.format(
-                    self.owner.name.capitalize(), target.name, str(damage), damage_type), libtcod.light_red)})
+                    self.owner.name, target.name, str(-damage), damage_type), libtcod.light_red)})
+                results.extend(target.fighter.take_damage(damage))
             else:
                 results.append({'message': Message('The {0} heals the {1} for {2} health!'.format(
-                    self.owner.name.capitalize(), target.name, str(damage), damage_type), libtcod.green)})    
+                    self.owner.name, target.name, str(-damage), damage_type), libtcod.dark_green)})
+                results.extend(target.fighter.take_damage(damage))
         else:
             if self.name == 'Guardian':
                 results.append({'message': Message('The {0} can\'t damage the {1}!'.format(
-                    self.owner.name.capitalize(), target.name, str(damage), damage_type), libtcod.yellow)})
+                    self.owner.name, target.name, str(damage), damage_type), libtcod.yellow)})
             else:
                 results.append({'message': Message('The {0} can\'t damage the {1}!'.format(
                     self.owner.name.capitalize(), target.name, str(damage), damage_type), libtcod.yellow)})

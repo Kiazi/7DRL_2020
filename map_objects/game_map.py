@@ -91,7 +91,7 @@ class GameMap:
                 num_rooms += 1
         
         stairs_component = Stairs(self.dungeon_level +1)
-        down_stairs = Entity(center_of_last_room_x, center_of_last_room_y, 265, libtcod.white, 'Summer Break',
+        down_stairs = Entity(center_of_last_room_x, center_of_last_room_y, 265, libtcod.white, 'Stairs',
                             render_order = RenderOrder.STAIRS, stairs=stairs_component)
         entities.append(down_stairs)
             
@@ -124,7 +124,7 @@ class GameMap:
         monster_chances = {
             'small': 80,
             'medium': from_dungeon_level([[15, 3], [30, 5], [60, 7]], self.dungeon_level),
-            'large': from_dungeon_level([[10, 3], [20, 5], [30, 7]], self.dungeon_level)
+            'large': from_dungeon_level([[10, 6], [20, 8], [30, 10]], self.dungeon_level)
         }
         
         # Define chance for each type
@@ -141,6 +141,8 @@ class GameMap:
         
         item_chances = {
             'healing_potion': 50,
+            'dagger': 2,
+            'shield': 2
             #'art_sword': from_dungeon_level([[5, 1]], self.dungeon_level),
             #'art_shield': from_dungeon_level([[5, 1]], self.dungeon_level),
             #'math_sword': from_dungeon_level([[5, 1]], self.dungeon_level),
@@ -166,172 +168,172 @@ class GameMap:
                 if monster_choice == 'small':
                     if monster_type_choice == 'blank':
                     
-                        fighter_component = Fighter(hp=20, defense=0, power=4, name='small blank elemental', xp=1, element='blank')
+                        fighter_component = Fighter(hp=20, defense=0, power=0, blank_element=5, name='exto sprite', xp=1, element='blank')
                         ai_component = BasicMonster()
-                        monster = Entity(x, y, 275, libtcod.white, 'small blank elemental', blocks = True,
+                        monster = Entity(x, y, 275, libtcod.white, 'exto sprite', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                     
                     elif monster_type_choice == 'fire':
                     
-                        fighter_component = Fighter(hp=20, defense=0, power=4, name='small fire elemental', xp=1, element='fire')
+                        fighter_component = Fighter(hp=20, defense=0, power=0, fire_element=10, name='infernus sprite', xp=1, element='fire')
                         ai_component = BasicMonster()
-                        monster = Entity(x, y, 278, libtcod.white, 'small fire elemental', blocks = True,
+                        monster = Entity(x, y, 268, libtcod.white, 'infernus sprite', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                     
                     elif monster_type_choice == 'air':
                     
-                        fighter_component = Fighter(hp=20, defense=0, power=4, name='small air elemental', xp=1, element='air')
+                        fighter_component = Fighter(hp=20, defense=0, power=0, air_element=10, name='sonus sprite', xp=1, element='air')
                         ai_component = BasicMonster()
-                        monster = Entity(x, y, 281, libtcod.white, 'small air elemental', blocks = True,
+                        monster = Entity(x, y, 270, libtcod.white, 'sonus sprite', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                     
                     elif monster_type_choice == 'ice':
                     
-                        fighter_component = Fighter(hp=20, defense=0, power=4, name='small ice elemental', xp=1, element='ice')
+                        fighter_component = Fighter(hp=20, defense=0, power=0, ice_element=10, name='glacius sprite', xp=1, element='ice')
                         ai_component = BasicMonster()
-                        monster = Entity(x, y, 284, libtcod.white, 'small ice elemental', blocks = True,
+                        monster = Entity(x, y, 271, libtcod.white, 'glacius sprite', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                             
                     elif monster_type_choice == 'lightning':
                     
-                        fighter_component = Fighter(hp=20, defense=0, power=4, name='small lightning elemental', xp=1, element='lightning')
+                        fighter_component = Fighter(hp=20, defense=0, power=0, lightning_element=randint(5,15), name='fara sprite', xp=1, element='lightning')
                         ai_component = BasicMonster()
-                        monster = Entity(x, y, 284, libtcod.white, 'small lightning elemental', blocks = True,
+                        monster = Entity(x, y, 273, libtcod.white, 'fara sprite', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                             
                     elif monster_type_choice == 'earth':
                     
-                        fighter_component = Fighter(hp=20, defense=0, power=4, name='small lightning elemental', xp=1, element='earth')
+                        fighter_component = Fighter(hp=20, defense=0, power=0, earth_element=10, name='stowne sprite', xp=1, element='earth')
                         ai_component = BasicMonster()
-                        monster = Entity(x, y, 284, libtcod.white, 'small lightning elemental', blocks = True,
+                        monster = Entity(x, y, 273, libtcod.white, 'stowne sprite', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                             
                     elif monster_type_choice == 'psychic':
                     
-                        fighter_component = Fighter(hp=20, defense=0, power=4, name='small psychic elemental', xp=1, element='psychic')
+                        fighter_component = Fighter(hp=20, defense=0, power=0, psychic_element=10, name='hex sprite', xp=1, element='psychic')
                         ai_component = BasicMonster()
-                        monster = Entity(x, y, 284, libtcod.white, 'small psychic elemental', blocks = True,
+                        monster = Entity(x, y, 274, libtcod.white, 'hex sprite', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                             
                     elif monster_type_choice == 'water':
                     
-                        fighter_component = Fighter(hp=20, defense=0, power=4, name='small water elemental', xp=1, element='water')
+                        fighter_component = Fighter(hp=20, defense=0, power=0, water_element=10, name='vapore sprite', xp=1, element='water')
                         ai_component = BasicMonster()
-                        monster = Entity(x, y, 284, libtcod.white, 'small water elemental', blocks = True,
+                        monster = Entity(x, y, 269, libtcod.white, 'vapore sprite', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                         
                 elif monster_choice == 'medium':
                     if monster_type_choice == 'blank':
                     
-                        fighter_component = Fighter(hp=35, defense=1, power=6, name='Art Exam', xp=0, element='blank')
+                        fighter_component = Fighter(hp=35, defense=5, power=0, blank_element=10, name='noxis pool', xp=2, element='blank')
                         ai_component = BasicMonster()
-                        monster = Entity(x, y, 276, libtcod.white, 'Art Exam', blocks = True,
+                        monster = Entity(x, y, 283, libtcod.white, 'noxis pool', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                     
                     elif monster_type_choice == 'fire':
                     
-                        fighter_component = Fighter(hp=35, defense=1, power=6, name='Math Exam', xp=0, element='fire')
+                        fighter_component = Fighter(hp=35, defense=5, power=0, fire_element=15, name='magmis pool', xp=2, element='fire')
                         ai_component = BasicMonster()
-                        monster = Entity(x, y, 279, libtcod.white, 'Math Exam', blocks = True,
+                        monster = Entity(x, y, 276, libtcod.white, 'magmis pool', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                     
                     elif monster_type_choice == 'air':
                     
-                        fighter_component = Fighter(hp=35, defense=1, power=6, name='Science Exam', xp=0, element='air')
+                        fighter_component = Fighter(hp=35, defense=5, power=0, air_element=15, name='tumul pool', xp=2, element='air')
                         ai_component = BasicMonster()
-                        monster = Entity(x, y, 282, libtcod.white, 'Science Exam', blocks = True,
+                        monster = Entity(x, y, 278, libtcod.white, 'tumul pool', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                     
                     elif monster_type_choice == 'ice':
                     
-                        fighter_component = Fighter(hp=35, defense=1, power=6, name='English Exam', xp=0, element='ice')
+                        fighter_component = Fighter(hp=35, defense=5, power=0, ice_element=15, name='iglis pool', xp=2, element='ice')
                         ai_component = BasicMonster()
-                        monster = Entity(x, y, 285, libtcod.white, 'English Exam', blocks = True,
+                        monster = Entity(x, y, 279, libtcod.white, 'iglis pool', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                             
                     elif monster_type_choice == 'lightning':
                     
-                        fighter_component = Fighter(hp=35, defense=1, power=6, name='English Exam', xp=0, element='lightning')
+                        fighter_component = Fighter(hp=35, defense=5, power=0, lightning_element=randint(10,20), name='galva pool', xp=2, element='lightning')
                         ai_component = BasicMonster()
-                        monster = Entity(x, y, 285, libtcod.white, 'English Exam', blocks = True,
+                        monster = Entity(x, y, 280, libtcod.white, 'galva pool', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                             
                     elif monster_type_choice == 'earth':
                     
-                        fighter_component = Fighter(hp=35, defense=1, power=6, name='English Exam', xp=0, element='earth')
+                        fighter_component = Fighter(hp=35, defense=5, power=0, earth_element=15, name='vivus pool', xp=2, element='earth')
                         ai_component = BasicMonster()
-                        monster = Entity(x, y, 285, libtcod.white, 'English Exam', blocks = True,
+                        monster = Entity(x, y, 281, libtcod.white, 'vivus pool', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                             
                     elif monster_type_choice == 'psychic':
                     
-                        fighter_component = Fighter(hp=35, defense=1, power=6, name='English Exam', xp=0, element='psychic')
+                        fighter_component = Fighter(hp=35, defense=5, power=0, psychic_element=15, name='manos pool', xp=2, element='psychic')
                         ai_component = BasicMonster()
-                        monster = Entity(x, y, 285, libtcod.white, 'English Exam', blocks = True,
+                        monster = Entity(x, y, 282, libtcod.white, 'manos pool', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                             
                     elif monster_type_choice == 'water':
                     
-                        fighter_component = Fighter(hp=35, defense=1, power=6, name='English Exam', xp=0, element='water')
+                        fighter_component = Fighter(hp=35, defense=5, power=0, water_element=15, name='azure pool', xp=2, element='water')
                         ai_component = BasicMonster()
-                        monster = Entity(x, y, 285, libtcod.white, 'English Exam', blocks = True,
+                        monster = Entity(x, y, 277, libtcod.white, 'azure pool', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                 
                 elif monster_choice == 'large':
                     if monster_type_choice == 'blank':
                     
-                        fighter_component = Fighter(hp=50, defense=2, power=8, name='Art Final Exam', xp=4, element='blank')
+                        fighter_component = Fighter(hp=50, defense=10, power=0, blank_power=15, name='Aeon', xp=4, element='blank')
                         ai_component = BasicMonster()
-                        monster = Entity(x, y, 277, libtcod.white, 'Art Final Exam', blocks = True,
+                        monster = Entity(x, y, 292, libtcod.white, 'Aeon', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                     
                     elif monster_type_choice == 'fire':
                     
-                        fighter_component = Fighter(hp=50, defense=2, power=8, name='Math Final Exam', xp=4, element='fire')
+                        fighter_component = Fighter(hp=50, defense=10, power=3, fire_element=20, name='Kindra', xp=4, element='fire')
                         ai_component = BasicMonster()
-                        monster = Entity(x, y, 280, libtcod.white, 'Math Final Exam', blocks = True,
+                        monster = Entity(x, y, 284, libtcod.white, 'Kindra', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                     
                     elif monster_type_choice == 'air':
                     
-                        fighter_component = Fighter(hp=50, defense=2, power=8, name='Science Final Exam', xp=4, element='air')
+                        fighter_component = Fighter(hp=50, defense=10, power=3, air_element=20, name='Huricus', xp=4, element='air')
                         ai_component = BasicMonster()
-                        monster = Entity(x, y, 283, libtcod.white, 'Science Final Exam', blocks = True,
+                        monster = Entity(x, y, 286, libtcod.white, 'Huricus', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                     
                     elif monster_type_choice == 'ice':
                     
-                        fighter_component = Fighter(hp=50, defense=2, power=8, name='English Final Exam', xp=4, element='ice')
+                        fighter_component = Fighter(hp=50, defense=10, power=3, ice_element=20, name='Flaik', xp=4, element='ice')
                         ai_component = BasicMonster()
-                        monster = Entity(x, y, 286, libtcod.white, 'English Final Exam', blocks = True,
+                        monster = Entity(x, y, 288, libtcod.white, 'Flaik', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                             
                     elif monster_type_choice == 'lightning':
                     
-                        fighter_component = Fighter(hp=50, defense=2, power=8, name='English Final Exam', xp=4, element='lightning')
+                        fighter_component = Fighter(hp=50, defense=10, power=3, lightning_element=randint(20,30), name='Astra', xp=4, element='lightning')
                         ai_component = BasicMonster()
-                        monster = Entity(x, y, 286, libtcod.white, 'English Final Exam', blocks = True,
+                        monster = Entity(x, y, 289, libtcod.white, 'Astra', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                             
                     elif monster_type_choice == 'earth':
                     
-                        fighter_component = Fighter(hp=50, defense=2, power=8, name='English Final Exam', xp=4, element='earth')
+                        fighter_component = Fighter(hp=50, defense=10, power=3, earth_element=20, name='Oria', xp=4, element='earth')
                         ai_component = BasicMonster()
-                        monster = Entity(x, y, 286, libtcod.white, 'English Final Exam', blocks = True,
+                        monster = Entity(x, y, 290, libtcod.white, 'Oria', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                             
                     elif monster_type_choice == 'psychic':
                     
-                        fighter_component = Fighter(hp=50, defense=2, power=8, name='English Final Exam', xp=4, element='psychic')
+                        fighter_component = Fighter(hp=50, defense=10, power=3, psychic_element=20, name='Genis', xp=4, element='psychic')
                         ai_component = BasicMonster()
-                        monster = Entity(x, y, 286, libtcod.white, 'English Final Exam', blocks = True,
+                        monster = Entity(x, y, 291, libtcod.white, 'Genis', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                             
                     elif monster_type_choice == 'water':
                     
-                        fighter_component = Fighter(hp=50, defense=2, power=8, name='English Final Exam', xp=4, element='water')
+                        fighter_component = Fighter(hp=50, defense=10, power=3, water_element=20, name='Aquifis', xp=4, element='water')
                         ai_component = BasicMonster()
-                        monster = Entity(x, y, 286, libtcod.white, 'English Final Exam', blocks = True,
+                        monster = Entity(x, y, 285, libtcod.white, 'Aquifis', blocks = True,
                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                 entities.append(monster)
                 
@@ -346,30 +348,36 @@ class GameMap:
                     item_component=Item(use_function=heal, amount = 40)
                     item = Entity(x, y, 262, libtcod.white, 'Relaxing Tea', render_order=RenderOrder.ITEM,
                                     item=item_component)
-                elif item_choice == 'art_sword':
-                    equippable_component = Equippable(EquipmentSlots.MAIN_HAND, art_power_bonus=5)
-                    item = Entity(x, y, 267, libtcod.white, 'Paintbrush', equippable=equippable_component)
-                elif item_choice == 'art_shield':
-                    equippable_component = Equippable(EquipmentSlots.OFF_HAND, art_defense_bonus=4)
-                    item = Entity(x, y, 268, libtcod.white, 'Pallete Clipboard', equippable=equippable_component)
-                elif item_choice == 'math_sword':
-                    equippable_component = Equippable(EquipmentSlots.MAIN_HAND, math_power_bonus=5)
-                    item = Entity(x, y, 269, libtcod.white, 'Ruler', equippable=equippable_component)
-                elif item_choice == 'math_shield':
-                    equippable_component = Equippable(EquipmentSlots.OFF_HAND, math_defense_bonus=4)
-                    item = Entity(x, y, 270, libtcod.white, 'Measuring Clipboard', equippable=equippable_component)
-                elif item_choice == 'science_sword':
-                    equippable_component = Equippable(EquipmentSlots.MAIN_HAND, science_power_bonus=5)
-                    item = Entity(x, y, 271, libtcod.white, 'Calculator', equippable=equippable_component)
-                elif item_choice == 'science_shield':
-                    equippable_component = Equippable(EquipmentSlots.OFF_HAND, science_defense_bonus=4)
-                    item = Entity(x, y, 272, libtcod.white, 'Vial Clipboard', equippable=equippable_component)
-                elif item_choice == 'english_sword':
-                    equippable_component = Equippable(EquipmentSlots.MAIN_HAND, english_power_bonus=5)
-                    item = Entity(x, y, 273, libtcod.white, 'Dictionary', equippable=equippable_component)
-                elif item_choice == 'english_shield':
-                    equippable_component = Equippable(EquipmentSlots.OFF_HAND, english_defense_bonus=4)
-                    item = Entity(x, y, 274, libtcod.white, 'Report Clipboard', equippable=equippable_component)
+                if item_choice == 'dagger':
+                    equippable_component = Equippable(EquipmentSlots.MAIN_HAND, power_bonus= int(self.dungeon_level))
+                    item = Entity(x, y, 266, libtcod.white, 'Elemental Absorber + ' + str(self.dungeon_level), equippable=equippable_component)
+                if item_choice == 'shield':
+                    equippable_component = Equippable(EquipmentSlots.OFF_HAND, defense_bonus= int(self.dungeon_level), max_hp_bonus=self.dungeon_level*5)
+                    item = Entity(x, y, 264, libtcod.white, 'Elemental Deflector + ' + str(self.dungeon_level), equippable=equippable_component)
+                # elif item_choice == 'art_sword':
+                    # equippable_component = Equippable(EquipmentSlots.MAIN_HAND, art_power_bonus=5)
+                    # item = Entity(x, y, 267, libtcod.white, 'Paintbrush', equippable=equippable_component)
+                # elif item_choice == 'art_shield':
+                    # equippable_component = Equippable(EquipmentSlots.OFF_HAND, art_defense_bonus=4)
+                    # item = Entity(x, y, 268, libtcod.white, 'Pallete Clipboard', equippable=equippable_component)
+                # elif item_choice == 'math_sword':
+                    # equippable_component = Equippable(EquipmentSlots.MAIN_HAND, math_power_bonus=5)
+                    # item = Entity(x, y, 269, libtcod.white, 'Ruler', equippable=equippable_component)
+                # elif item_choice == 'math_shield':
+                    # equippable_component = Equippable(EquipmentSlots.OFF_HAND, math_defense_bonus=4)
+                    # item = Entity(x, y, 270, libtcod.white, 'Measuring Clipboard', equippable=equippable_component)
+                # elif item_choice == 'science_sword':
+                    # equippable_component = Equippable(EquipmentSlots.MAIN_HAND, science_power_bonus=5)
+                    # item = Entity(x, y, 271, libtcod.white, 'Calculator', equippable=equippable_component)
+                # elif item_choice == 'science_shield':
+                    # equippable_component = Equippable(EquipmentSlots.OFF_HAND, science_defense_bonus=4)
+                    # item = Entity(x, y, 272, libtcod.white, 'Vial Clipboard', equippable=equippable_component)
+                # elif item_choice == 'english_sword':
+                    # equippable_component = Equippable(EquipmentSlots.MAIN_HAND, english_power_bonus=5)
+                    # item = Entity(x, y, 273, libtcod.white, 'Dictionary', equippable=equippable_component)
+                # elif item_choice == 'english_shield':
+                    # equippable_component = Equippable(EquipmentSlots.OFF_HAND, english_defense_bonus=4)
+                    # item = Entity(x, y, 274, libtcod.white, 'Report Clipboard', equippable=equippable_component)
                 
                 entities.append(item)
     
@@ -389,6 +397,6 @@ class GameMap:
 
         player.fighter.heal(player.fighter.max_hp // 2)
 
-        message_log.add_message(Message('You take a moment to rest and relax before the next wave of Final Exams.', libtcod.light_violet))
+        message_log.add_message(Message('You take a moment to rest and relax before the next wave of elements.', libtcod.light_violet))
 
         return entities
