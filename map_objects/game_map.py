@@ -125,6 +125,7 @@ class GameMap:
             'small': 80,
             'medium': from_dungeon_level([[15, 3], [30, 5], [60, 7]], self.dungeon_level),
             'large': from_dungeon_level([[10, 6], [20, 8], [30, 10]], self.dungeon_level)
+            # add in 'boss' which changes its element randomly each turn
         }
         
         # Define chance for each type
