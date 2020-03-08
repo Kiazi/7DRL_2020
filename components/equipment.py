@@ -19,6 +19,114 @@ class Equipment:
         return bonus
 
     @property
+    def max_blank_element_bonus(self):
+        bonus = 0
+
+        if self.main_hand and self.main_hand.equippable:
+            bonus += self.main_hand.equippable.max_blank_element_bonus
+
+        if self.off_hand and self.off_hand.equippable:
+            bonus += self.off_hand.equippable.max_blank_element_bonus
+
+        return bonus
+
+    @property
+    def max_fire_element_bonus(self):
+        bonus = 0
+
+        if self.main_hand and self.main_hand.equippable:
+            bonus += self.main_hand.equippable.max_fire_element_bonus
+
+        if self.off_hand and self.off_hand.equippable:
+            bonus += self.off_hand.equippable.max_fire_element_bonus
+
+        return bonus
+
+    @property
+    def max_hp_bonus(self):
+        bonus = 0
+
+        if self.main_hand and self.main_hand.equippable:
+            bonus += self.main_hand.equippable.max_hp_bonus
+
+        if self.off_hand and self.off_hand.equippable:
+            bonus += self.off_hand.equippable.max_hp_bonus
+
+        return bonus
+
+    @property
+    def max_air_element_bonus(self):
+        bonus = 0
+
+        if self.main_hand and self.main_hand.equippable:
+            bonus += self.main_hand.equippable.max_air_element_bonus
+
+        if self.off_hand and self.off_hand.equippable:
+            bonus += self.off_hand.equippable.max_air_element_bonus
+
+        return bonus
+
+    @property
+    def max_ice_element_bonus(self):
+        bonus = 0
+
+        if self.main_hand and self.main_hand.equippable:
+            bonus += self.main_hand.equippable.max_ice_element_bonus
+
+        if self.off_hand and self.off_hand.equippable:
+            bonus += self.off_hand.equippable.max_ice_element_bonus
+
+        return bonus
+
+    @property
+    def max_lightning_element_bonus(self):
+        bonus = 0
+
+        if self.main_hand and self.main_hand.equippable:
+            bonus += self.main_hand.equippable.max_lightning_element_bonus
+
+        if self.off_hand and self.off_hand.equippable:
+            bonus += self.off_hand.equippable.max_lightning_element_bonus
+
+        return bonus
+
+    @property
+    def max_earth_element_bonus(self):
+        bonus = 0
+
+        if self.main_hand and self.main_hand.equippable:
+            bonus += self.main_hand.equippable.max_earth_element_bonus
+
+        if self.off_hand and self.off_hand.equippable:
+            bonus += self.off_hand.equippable.max_earth_element_bonus
+
+        return bonus
+
+    @property
+    def max_psychic_element_bonus(self):
+        bonus = 0
+
+        if self.main_hand and self.main_hand.equippable:
+            bonus += self.main_hand.equippable.max_psychic_element_bonus
+
+        if self.off_hand and self.off_hand.equippable:
+            bonus += self.off_hand.equippable.max_psychic_element_bonus
+
+        return bonus
+
+    @property
+    def max_water_element_bonus(self):
+        bonus = 0
+
+        if self.main_hand and self.main_hand.equippable:
+            bonus += self.main_hand.equippable.max_water_element_bonus
+
+        if self.off_hand and self.off_hand.equippable:
+            bonus += self.off_hand.equippable.max_water_element_bonus
+
+        return bonus
+
+    @property
     def power_bonus(self):
         bonus = 0
 
@@ -31,50 +139,98 @@ class Equipment:
         return bonus
         
     @property
-    def art_power_bonus(self):
+    def blank_power_bonus(self):
         bonus = 0
 
         if self.main_hand and self.main_hand.equippable:
-            bonus += self.main_hand.equippable.art_power_bonus
+            bonus += self.main_hand.equippable.blank_power_bonus
 
         if self.off_hand and self.off_hand.equippable:
-            bonus += self.off_hand.equippable.art_power_bonus
+            bonus += self.off_hand.equippable.blank_power_bonus
 
         return bonus
         
     @property
-    def math_power_bonus(self):
+    def fire_power_bonus(self):
         bonus = 0
 
         if self.main_hand and self.main_hand.equippable:
-            bonus += self.main_hand.equippable.math_power_bonus
+            bonus += self.main_hand.equippable.fire_power_bonus
 
         if self.off_hand and self.off_hand.equippable:
-            bonus += self.off_hand.equippable.math_power_bonus
+            bonus += self.off_hand.equippable.fire_power_bonus
 
         return bonus
         
     @property
-    def science_power_bonus(self):
+    def air_power_bonus(self):
         bonus = 0
 
         if self.main_hand and self.main_hand.equippable:
-            bonus += self.main_hand.equippable.science_power_bonus
+            bonus += self.main_hand.equippable.air_power_bonus
 
         if self.off_hand and self.off_hand.equippable:
-            bonus += self.off_hand.equippable.science_power_bonus
+            bonus += self.off_hand.equippable.air_power_bonus
 
         return bonus
         
     @property
-    def english_power_bonus(self):
+    def ice_power_bonus(self):
         bonus = 0
 
         if self.main_hand and self.main_hand.equippable:
-            bonus += self.main_hand.equippable.english_power_bonus
+            bonus += self.main_hand.equippable.ice_power_bonus
 
         if self.off_hand and self.off_hand.equippable:
-            bonus += self.off_hand.equippable.english_power_bonus
+            bonus += self.off_hand.equippable.ice_power_bonus
+
+        return bonus
+        
+    @property
+    def lightning_power_bonus(self):
+        bonus = 0
+
+        if self.main_hand and self.main_hand.equippable:
+            bonus += self.main_hand.equippable.lightning_power_bonus
+
+        if self.off_hand and self.off_hand.equippable:
+            bonus += self.off_hand.equippable.lightning_power_bonus
+
+        return bonus
+        
+    @property
+    def earth_power_bonus(self):
+        bonus = 0
+
+        if self.main_hand and self.main_hand.equippable:
+            bonus += self.main_hand.equippable.earth_power_bonus
+
+        if self.off_hand and self.off_hand.equippable:
+            bonus += self.off_hand.equippable.earth_power_bonus
+
+        return bonus
+        
+    @property
+    def psychic_power_bonus(self):
+        bonus = 0
+
+        if self.main_hand and self.main_hand.equippable:
+            bonus += self.main_hand.equippable.psychic_power_bonus
+
+        if self.off_hand and self.off_hand.equippable:
+            bonus += self.off_hand.equippable.psychic_power_bonus
+
+        return bonus
+        
+    @property
+    def water_power_bonus(self):
+        bonus = 0
+
+        if self.main_hand and self.main_hand.equippable:
+            bonus += self.main_hand.equippable.water_power_bonus
+
+        if self.off_hand and self.off_hand.equippable:
+            bonus += self.off_hand.equippable.water_power_bonus
 
         return bonus
 
@@ -91,50 +247,98 @@ class Equipment:
         return bonus
         
     @property
-    def art_defense_bonus(self):
+    def blank_defense_bonus(self):
         bonus = 0
 
         if self.main_hand and self.main_hand.equippable:
-            bonus += self.main_hand.equippable.art_defense_bonus
+            bonus += self.main_hand.equippable.blank_defense_bonus
 
         if self.off_hand and self.off_hand.equippable:
-            bonus += self.off_hand.equippable.art_defense_bonus
+            bonus += self.off_hand.equippable.blank_defense_bonus
 
         return bonus
         
     @property
-    def math_defense_bonus(self):
+    def fire_defense_bonus(self):
         bonus = 0
 
         if self.main_hand and self.main_hand.equippable:
-            bonus += self.main_hand.equippable.math_defense_bonus
+            bonus += self.main_hand.equippable.fire_defense_bonus
 
         if self.off_hand and self.off_hand.equippable:
-            bonus += self.off_hand.equippable.math_defense_bonus
+            bonus += self.off_hand.equippable.fire_defense_bonus
 
         return bonus
         
     @property
-    def science_defense_bonus(self):
+    def air_defense_bonus(self):
         bonus = 0
 
         if self.main_hand and self.main_hand.equippable:
-            bonus += self.main_hand.equippable.science_defense_bonus
+            bonus += self.main_hand.equippable.air_defense_bonus
 
         if self.off_hand and self.off_hand.equippable:
-            bonus += self.off_hand.equippable.science_defense_bonus
+            bonus += self.off_hand.equippable.air_defense_bonus
 
         return bonus
         
     @property
-    def english_defense_bonus(self):
+    def ice_defense_bonus(self):
         bonus = 0
 
         if self.main_hand and self.main_hand.equippable:
-            bonus += self.main_hand.equippable.english_defense_bonus
+            bonus += self.main_hand.equippable.ice_defense_bonus
 
         if self.off_hand and self.off_hand.equippable:
-            bonus += self.off_hand.equippable.english_defense_bonus
+            bonus += self.off_hand.equippable.ice_defense_bonus
+
+        return bonus
+        
+    @property
+    def lightning_defense_bonus(self):
+        bonus = 0
+
+        if self.main_hand and self.main_hand.equippable:
+            bonus += self.main_hand.equippable.lightning_defense_bonus
+
+        if self.off_hand and self.off_hand.equippable:
+            bonus += self.off_hand.equippable.lightning_defense_bonus
+
+        return bonus
+        
+    @property
+    def earth_defense_bonus(self):
+        bonus = 0
+
+        if self.main_hand and self.main_hand.equippable:
+            bonus += self.main_hand.equippable.earth_defense_bonus
+
+        if self.off_hand and self.off_hand.equippable:
+            bonus += self.off_hand.equippable.earth_defense_bonus
+
+        return bonus
+        
+    @property
+    def psychic_defense_bonus(self):
+        bonus = 0
+
+        if self.main_hand and self.main_hand.equippable:
+            bonus += self.main_hand.equippable.psychic_defense_bonus
+
+        if self.off_hand and self.off_hand.equippable:
+            bonus += self.off_hand.equippable.psychic_defense_bonus
+
+        return bonus
+        
+    @property
+    def water_defense_bonus(self):
+        bonus = 0
+
+        if self.main_hand and self.main_hand.equippable:
+            bonus += self.main_hand.equippable.water_defense_bonus
+
+        if self.off_hand and self.off_hand.equippable:
+            bonus += self.off_hand.equippable.water_defense_bonus
 
         return bonus
 

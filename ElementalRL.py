@@ -40,8 +40,8 @@ def main():
     
     # assign the custom font rows numbers to text (for easier calling when defining entities with custom tiles)
     # defining tiles (rather than numbers)
-    wall_tile = 256
-    floor_tile = 257
+    wall_tile = 257 #note: see render_functions for where the wall and floor tiles are defined, these are not used.
+    floor_tile = 256
     player_tile = 258
     quiz_tile = 259
     exam_tile = 260
@@ -222,7 +222,33 @@ def main():
                 if dead_entity == player:
                     message, game_state = kill_player(dead_entity)
                 else:
-                    message = kill_monster(dead_entity)
+                    # Using xp to increase player's stats, "absorbing" the element
+                    if dead_entity.fighter.element == 'blank':
+                        player.fighter.blank_element += dead_entity.fighter.xp
+                        message = kill_monster(dead_entity)
+                        if player.fighter.blank_element > player.fighter.max_blank_element:
+                            player.fighter.blank_element = player.fighter.max_blank_element
+                    elif dead_entity.fighter.element == 'fire':
+                        player.fighter.fire_element += dead_entity.fighter.xp
+                        message = kill_monster(dead_entity)
+                    elif dead_entity.fighter.element == 'air':
+                        player.fighter.air_element += dead_entity.fighter.xp
+                        message = kill_monster(dead_entity)
+                    elif dead_entity.fighter.element == 'ice':
+                        player.fighter.ice_element += dead_entity.fighter.xp
+                        message = kill_monster(dead_entity)
+                    elif dead_entity.fighter.element == 'lightning':
+                        player.fighter.lightning_element += dead_entity.fighter.xp
+                        message = kill_monster(dead_entity)
+                    elif dead_entity.fighter.element == 'earth':
+                        player.fighter.earth_element += dead_entity.fighter.xp
+                        message = kill_monster(dead_entity)
+                    elif dead_entity.fighter.element == 'psychic':
+                        player.fighter.psychic_element += dead_entity.fighter.xp
+                        message = kill_monster(dead_entity)
+                    elif dead_entity.fighter.element == 'water':
+                        player.fighter.water_element += dead_entity.fighter.xp
+                        message = kill_monster(dead_entity)
                 
                 message_log.add_message(message)
             
@@ -258,7 +284,8 @@ def main():
             
             if xp:
                 leveled_up = player.level.add_xp(xp)
-                message_log.add_message(Message('You passed the Final Exam and gained {0} credits!'.format(xp)))
+                message_log.add_message(Message('You gained {0} exp!'.format(xp))) 
+                # player.fighter.blank_element +=1
                 
                 if leveled_up:
                     if player.level.current_level == 5:
@@ -267,11 +294,11 @@ def main():
                         message_log.add_message(Message('You have completed 180 credits at the College of Doom! You graduated!', libtcod.yellow))
                     else:
                         message_log.add_message(Message(
-                            'You made it through another year of school! You move on to school year {0}'.format(
+                            'Level up! You are now level {0}'.format(
                                 player.level.current_level) + '!', libtcod.yellow))
                         previous_game_state = game_state
                         game_state = GameStates.LEVEL_UP
-
+                        
         if game_state == GameStates.ENEMY_TURN:
             for entity in entities:
                 if entity.ai:

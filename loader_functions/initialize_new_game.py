@@ -4,22 +4,22 @@ import tcod as libtcod
 def get_constants():
     window_title = 'ElementalRL'
 
-    screen_width = 50
-    screen_height = 30
+    screen_width = 58
+    screen_height = 31
 
-    bar_width = 20
-    panel_height = 7
+    bar_width = 15
+    panel_height = 10
     panel_y = screen_height - panel_height
 
     message_x = bar_width + 2
     message_width = screen_width - bar_width - 2
     message_height = panel_height - 1
 
-    map_width = 50
-    map_height = 23
+    map_width = screen_width
+    map_height = screen_height-panel_height
 
-    room_max_size = 10
-    room_min_size = 6
+    room_max_size = 6
+    room_min_size = 4
     max_rooms = 30
 
     fov_algorithm = 0
