@@ -18,8 +18,8 @@ def get_constants():
     map_width = screen_width
     map_height = screen_height-panel_height
 
-    room_max_size = 6
-    room_min_size = 4
+    room_max_size = 10
+    room_min_size = 6
     max_rooms = 30
 
     fov_algorithm = 0

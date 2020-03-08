@@ -62,7 +62,21 @@ def render_all(con, panel, entities, player, game_map, fov_map, fov_recompute, m
                         
     # Draw all entities in the list
     for entity in entities_in_render_order:
-        draw_entity(con, entity, fov_map, game_map)
+        visible = libtcod.map_is_in_fov(fov_map, entity.x, entity.y)
+        x = entity.x
+        y = entity.y
+        if visible:
+            draw_entity(con, entity, fov_map, game_map)
+        else:
+            floor_tile = 256
+            if game_map.tiles[x][y].explored == True:
+                if entity.stairs:
+                    stairsdown_tile = 265
+                    libtcod.console_put_char_ex(con, x, y, stairsdown_tile, libtcod.white, libtcod.black)
+                else:
+                    libtcod.console_put_char_ex(con, x, y, floor_tile, libtcod.grey, libtcod.black)
+            else:
+                libtcod.console_put_char_ex(con, x, y, floor_tile, libtcod.black, libtcod.black)
 
     libtcod.console_blit(con, 0, 0, screen_width, screen_height, 0, 0, 0)
     
