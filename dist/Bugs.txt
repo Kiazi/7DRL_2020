@@ -1,0 +1,1 @@
+Anything on floor renders as black tiles when not in LOS (should render as floor tile).
