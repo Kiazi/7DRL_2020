@@ -51,7 +51,7 @@ def main():
     stairsdown_tile = 265
     dagger_tile = 266
     
-    fighter_component = Fighter(hp=30, defense=0, power=3, name='Guardian')
+    fighter_component = Fighter(hp=30, defense=1, power=3, name='Guardian')
     inventory_component = Inventory(8)
     level_component = Level()
     equipment_component = Equipment()
@@ -65,10 +65,11 @@ def main():
     player.inventory.add_item(dagger)
     player.equipment.toggle_equip(dagger)
     
-    equippable_component = Equippable(EquipmentSlots.OFF_HAND, max_hp_bonus=0, defense_bonus=1)
-    shield = Entity(0,0, shield_tile, libtcod.white, 'Elemental Deflector + 1', equippable=equippable_component)
+    equippable_component = Equippable(EquipmentSlots.OFF_HAND, max_hp_bonus=5, defense_bonus=0)
+    shield = Entity(0,0, shield_tile, libtcod.white, 'Elemental Deflector + 0', equippable=equippable_component)
     player.inventory.add_item(shield)
     player.equipment.toggle_equip(shield)
+    player.fighter.hp += shield.equippable.max_hp_bonus
     
     con = libtcod.console.Console(constants['screen_width'], constants['screen_height'])
     panel = libtcod.console.Console(constants['screen_width'], constants['panel_height'])
@@ -90,7 +91,7 @@ def main():
     previous_game_state = game_state
 
     # Welcome the player
-    message_log.add_message(Message('Welcome, Guardian, to the Elemental Chasms! Aquire 180 exp to save the elements...or die trying!', libtcod.white))
+    message_log.add_message(Message('Welcome, Guardian, to the elemental kingdom of Empyria! Aquire all the elements...or die trying! Fearsome foes await in the deepest depths of Empyria, where many Guardians have disappeared...', libtcod.white))
     
     while not libtcod.console_is_window_closed():
         libtcod.sys_check_for_event(libtcod.EVENT_KEY_PRESS | libtcod.EVENT_MOUSE, key, mouse)
@@ -186,12 +187,12 @@ def main():
         
         if level_up:
             if level_up == 'hp':
-                player.fighter.base_max_hp += 20
-                player.fighter.hp += 20
+                player.fighter.base_max_hp += 30
+                player.fighter.hp += 30
             elif level_up == 'str':
                 player.fighter.base_power += 5
             elif level_up == 'def':
-                player.fighter.base_defense += 2
+                player.fighter.base_defense += 1
 
             game_state = previous_game_state
         
@@ -217,6 +218,7 @@ def main():
             dead_entity = player_turn_result.get('dead')
             item_added = player_turn_result.get('item_added')
             item_consumed = player_turn_result.get('consumed')
+            item_pick_gold = player_turn_result.get('got_gold')
             item_dropped = player_turn_result.get('item_dropped')
             equip = player_turn_result.get('equip')
             
@@ -228,6 +230,11 @@ def main():
                     message, game_state = kill_player(dead_entity)
                 else:
                     # Using xp to increase player's stats, "absorbing" the element
+                    if dead_entity.fighter.name == 'Corrupted Guardian':
+                        previous_game_state = game_state
+                        game_state = GameStates.WIN
+                        message_log.add_message(Message('You have brought peace to Empyria and vanquished the Corrputed Guardian! Congratulations!', libtcod.yellow))
+                    
                     if dead_entity.fighter.element == 'blank':
                         player.fighter.blank_element += dead_entity.fighter.xp
                         message = kill_monster(dead_entity)
@@ -279,6 +286,11 @@ def main():
             if item_consumed:
                 game_state = GameStates.ENEMY_TURN
                 
+            # if item_pick_gold:
+                # entities.remove(item_gold)
+            
+                # game_state = GameStates.ENEMY_TURN
+                
             if item_dropped:
                 entities.append(item_dropped)
                 
@@ -302,32 +314,31 @@ def main():
             xp = player_turn_result.get('xp')
             
             if xp:
-                leveled_up = player.level.add_xp(xp)
-                message_log.add_message(Message('You gained {0} exp!'.format(xp)))
-                if (player.fighter.blank_element == player.fighter.max_blank_element and
-                    player.fighter.fire_element == player.fighter.max_fire_element and
-                    player.fighter.air_element == player.fighter.max_air_element and
-                    player.fighter.ice_element == player.fighter.max_ice_element and
-                    player.fighter.lightning_element == player.fighter.max_lightning_element and
-                    player.fighter.earth_element == player.fighter.max_earth_element and
-                    player.fighter.psychic_element == player.fighter.max_psychic_element and
-                    player.fighter.water_element == player.fighter.max_water_element):
-                    previous_game_state = game_state
-                    game_state = GameStates.WIN
-                    message_log.add_message(Message('You have collected all of the elements and are now a true Elemental Guardian! You won!', libtcod.yellow))
+                if not GameStates.WIN:
+                    leveled_up = player.level.add_xp(xp)
+                    message_log.add_message(Message('You gained {0} exp!'.format(xp)))
+                    if (player.fighter.blank_element == player.fighter.max_blank_element and
+                        player.fighter.fire_element == player.fighter.max_fire_element and
+                        player.fighter.air_element == player.fighter.max_air_element and
+                        player.fighter.ice_element == player.fighter.max_ice_element and
+                        player.fighter.lightning_element == player.fighter.max_lightning_element and
+                        player.fighter.earth_element == player.fighter.max_earth_element and
+                        player.fighter.psychic_element == player.fighter.max_psychic_element and
+                        player.fighter.water_element == player.fighter.max_water_element):
+                        message_log.add_message(Message('You have collected all of the elements and are now a true Elemental Guardian! You won! Or did you...?', libtcod.yellow))
                 
-                if leveled_up:
-                    
-                    # if player.level.current_level == 5:
-                        # previous_game_state = game_state
-                        # game_state = GameStates.WIN
-                        # message_log.add_message(Message('You have collected 180 exp! You won!', libtcod.yellow))
-                    # else:
-                    message_log.add_message(Message(
-                        'Level up! You are now level {0}'.format(
-                            player.level.current_level) + '!', libtcod.yellow))
-                    previous_game_state = game_state
-                    game_state = GameStates.LEVEL_UP
+                    if leveled_up:
+                        
+                        # if player.level.current_level == 5:
+                            # previous_game_state = game_state
+                            # game_state = GameStates.WIN
+                            # message_log.add_message(Message('You have collected 180 exp! You won!', libtcod.yellow))
+                        # else:
+                        message_log.add_message(Message(
+                            'Level up! You are now level {0}'.format(
+                                player.level.current_level) + '!', libtcod.yellow))
+                        previous_game_state = game_state
+                        game_state = GameStates.LEVEL_UP
                         
         if game_state == GameStates.ENEMY_TURN:
             for entity in entities:

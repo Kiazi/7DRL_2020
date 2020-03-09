@@ -47,9 +47,9 @@ def inventory_menu(con, header, player, inventory_width, screen_width, screen_he
     menu(con, header, options, inventory_width, screen_width, screen_height)
     
 def level_up_menu(con, header, player, menu_width, screen_width, screen_height):
-    options = ['Maximum Health (+20 max Health, from {0})'.format(player.fighter.max_hp),
+    options = ['Maximum Health (+30 max Health, from {0})'.format(player.fighter.max_hp),
                'Power (+5 physical damage, from {0})'.format(player.fighter.power),
-               'Defense (+2 damage reduction, from {0})'.format(player.fighter.defense)]
+               'Defense (+1 damage reduction, from {0})'.format(player.fighter.defense)]
 
     menu(con, header, options, menu_width, screen_width, screen_height)
     

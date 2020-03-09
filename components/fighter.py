@@ -325,6 +325,117 @@ class Fighter:
     def attack(self, target):
         results = []
         
+        # Corrupted Guardian attack
+        if self.name == 'Corrupted Guardian':
+            base_damage = self.power
+            blank_damage = self.blank_power
+            if target.fighter.ice_defense == 0 and target.fighter.fire_defense == 0:
+                fire_damage = self.fire_power*1/3
+            else:
+                fire_damage = self.fire_power*((target.fighter.ice_defense)/(target.fighter.ice_defense+target.fighter.fire_defense)-0.25)*4/3
+            
+            if target.fighter.psychic_defense == 0 and target.fighter.air_defense == 0:
+                air_damage = self.air_power*1/3
+            else:
+                air_damage = self.air_power*((target.fighter.psychic_defense)/(target.fighter.psychic_defense+target.fighter.air_defense)-0.25)*4/3
+            
+            if target.fighter.earth_defense == 0 and target.fighter.ice_defense == 0:
+                ice_damage = self.ice_power*1/3
+            else:
+                ice_damage = self.ice_power*((target.fighter.earth_defense)/(target.fighter.earth_defense+target.fighter.ice_defense)-0.25)*4/3
+            
+            if target.fighter.water_defense == 0 and target.fighter.lightning_defense == 0:
+                lightning_damage = self.lightning_power*1/3
+            else:
+                lightning_damage = self.lightning_power*((target.fighter.water_defense)/(target.fighter.water_defense+target.fighter.lightning_defense)-0.25)*4/3
+            
+            if target.fighter.air_defense == 0 and target.fighter.earth_defense == 0:
+                earth_damage = self.earth_power*1/3
+            else:
+                earth_damage = self.earth_power*((target.fighter.air_defense)/(target.fighter.air_defense+target.fighter.earth_defense)-0.25)*4/3
+            
+            if target.fighter.lightning_defense == 0 and target.fighter.psychic_defense == 0:
+                psychic_damage = self.psychic_power*1/3
+            else:
+                psychic_damage = self.psychic_power*((target.fighter.lightning_defense)/(target.fighter.lightning_defense+target.fighter.psychic_defense)-0.25)*4/3
+            
+            if target.fighter.fire_defense == 0 and target.fighter.water_defense == 0:
+                water_damage = self.water_power*1/3
+            else:
+                water_damage = self.water_power*((target.fighter.fire_defense)/(target.fighter.fire_defense+target.fighter.water_defense)-0.25)*4/3
+            
+            #sum all damage to get total damage dealt, then round to nearest integer
+            damage = int(round(base_damage+
+            blank_damage+
+            fire_damage+
+            air_damage+
+            ice_damage+
+            lightning_damage+
+            earth_damage+
+            psychic_damage+
+            water_damage
+            ,0))
+            
+            #determine the damage type. This can then be printed with str(damage_type)
+            if base_damage > max(blank_damage,fire_damage,air_damage,ice_damage,lightning_damage,earth_damage,psychic_damage,water_damage):
+                damage_type = 'physical'
+                
+            elif blank_damage > max(base_damage,fire_damage,air_damage,ice_damage,lightning_damage,earth_damage,psychic_damage,water_damage):
+                damage_type = 'true'
+                
+            elif fire_damage > max(base_damage,blank_damage,air_damage,ice_damage,lightning_damage,earth_damage,psychic_damage,water_damage):
+                damage_type = 'fire'
+                
+            elif air_damage > max(base_damage,blank_damage,fire_damage,ice_damage,lightning_damage,earth_damage,psychic_damage,water_damage):
+                damage_type = 'air'
+                
+            elif ice_damage > max(base_damage,blank_damage,fire_damage,air_damage,lightning_damage,earth_damage,psychic_damage,water_damage):
+                damage_type = 'ice'
+                
+            elif lightning_damage > max(base_damage,blank_damage,fire_damage,air_damage,ice_damage,earth_damage,psychic_damage,water_damage):
+                damage_type = 'lightning'
+                
+            elif earth_damage > max(base_damage,blank_damage,fire_damage,air_damage,ice_damage,lightning_damage,psychic_damage,water_damage):
+                damage_type = 'earth'
+                
+            elif psychic_damage > max(base_damage,blank_damage,fire_damage,air_damage,ice_damage,lightning_damage,earth_damage,water_damage):
+                damage_type = 'psychic'
+            
+            elif water_damage > max(base_damage,blank_damage,fire_damage,air_damage,ice_damage,lightning_damage,earth_damage,psychic_damage):
+                damage_type = 'water'
+                
+            else:
+                damage_type = 'physical'
+            
+            if damage_type == 'physical':
+                self.blank_element += 30
+                self.base_power -=30
+            elif damage_type == 'true':
+                self.fire_element += 90
+                self.blank_element -=30
+            elif damage_type == 'fire':
+                self.air_element +=90
+                self.fire_element -=90
+            elif damage_type == 'air':
+                self.ice_element +=90
+                self.air_element -=90
+            elif damage_type == 'ice':
+                self.lightning_element +=90
+                self.ice_element -=90
+            elif damage_type == 'lightning':
+                self.earth_element += 90
+                self.lightning_element -=90
+            elif damage_type == 'earth':
+                self.psychic_element +=90
+                self.earth_element -=90
+            elif damage_type == 'psychic':
+                self.water_element +=90
+                self.psychic_element -=90
+            elif damage_type == 'water':
+                self.base_power +=30
+                self.water_element -=90
+            
+        
         # Attacking element
         if target.fighter.element != None:
             #calculate all of the damages dealt by element
@@ -487,12 +598,17 @@ class Fighter:
             
             elif water_damage > max(base_damage,blank_damage,fire_damage,air_damage,ice_damage,lightning_damage,earth_damage,psychic_damage):
                 damage_type = 'water'
-                
+            
             else:
                 damage_type = 'physical'
         
+        # elif target.fighter.element == None:
+            # damage = 1
+            # damage_type = 'lightning'
+        
         else:
             damage = 0
+            damage_type = 'physical'
         
         damage_color =  libtcod.white
         if damage_type == 'physical':

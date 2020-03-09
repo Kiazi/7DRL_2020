@@ -16,3 +16,15 @@ def heal(*args, **kwargs):
         results.append({'consumed': True, 'message': Message('Your wounds begin to close!', libtcod.green)})
 
     return results
+    
+# def gold(*args, **kwargs):
+    # entity = args[0]
+    # amount = kwargs.get('amount')
+    
+    # entity.fighter.gold += amount
+    
+    # results = []
+    
+    # results.append({'consumed': True})
+    
+    # return results
