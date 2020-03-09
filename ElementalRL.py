@@ -314,31 +314,31 @@ def main():
             xp = player_turn_result.get('xp')
             
             if xp:
-                if not GameStates.WIN:
-                    leveled_up = player.level.add_xp(xp)
-                    message_log.add_message(Message('You gained {0} exp!'.format(xp)))
-                    if (player.fighter.blank_element == player.fighter.max_blank_element and
-                        player.fighter.fire_element == player.fighter.max_fire_element and
-                        player.fighter.air_element == player.fighter.max_air_element and
-                        player.fighter.ice_element == player.fighter.max_ice_element and
-                        player.fighter.lightning_element == player.fighter.max_lightning_element and
-                        player.fighter.earth_element == player.fighter.max_earth_element and
-                        player.fighter.psychic_element == player.fighter.max_psychic_element and
-                        player.fighter.water_element == player.fighter.max_water_element):
-                        message_log.add_message(Message('You have collected all of the elements and are now a true Elemental Guardian! You won! Or did you...?', libtcod.yellow))
-                
-                    if leveled_up:
-                        
-                        # if player.level.current_level == 5:
-                            # previous_game_state = game_state
-                            # game_state = GameStates.WIN
-                            # message_log.add_message(Message('You have collected 180 exp! You won!', libtcod.yellow))
-                        # else:
-                        message_log.add_message(Message(
-                            'Level up! You are now level {0}'.format(
-                                player.level.current_level) + '!', libtcod.yellow))
-                        previous_game_state = game_state
-                        game_state = GameStates.LEVEL_UP
+                # if not GameStates.WIN:
+                leveled_up = player.level.add_xp(xp)
+                message_log.add_message(Message('You gained {0} exp!'.format(xp)))
+                if (player.fighter.blank_element == player.fighter.max_blank_element and
+                    player.fighter.fire_element == player.fighter.max_fire_element and
+                    player.fighter.air_element == player.fighter.max_air_element and
+                    player.fighter.ice_element == player.fighter.max_ice_element and
+                    player.fighter.lightning_element == player.fighter.max_lightning_element and
+                    player.fighter.earth_element == player.fighter.max_earth_element and
+                    player.fighter.psychic_element == player.fighter.max_psychic_element and
+                    player.fighter.water_element == player.fighter.max_water_element):
+                    message_log.add_message(Message('You have collected all of the elements and are now a true Elemental Guardian! You won! Or did you...?', libtcod.yellow))
+            
+                if leveled_up:
+                    
+                    # if player.level.current_level == 5:
+                        # previous_game_state = game_state
+                        # game_state = GameStates.WIN
+                        # message_log.add_message(Message('You have collected 180 exp! You won!', libtcod.yellow))
+                    # else:
+                    message_log.add_message(Message(
+                        'Level up! You are now level {0}'.format(
+                            player.level.current_level) + '!', libtcod.yellow))
+                    previous_game_state = game_state
+                    game_state = GameStates.LEVEL_UP
                         
         if game_state == GameStates.ENEMY_TURN:
             for entity in entities:
